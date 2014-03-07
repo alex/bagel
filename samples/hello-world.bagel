@@ -1,3 +1,3 @@
-def main(engine: Engine, argv: Array{Bytes}) -> Int:
+def main(engine: Engine, argv: Array{Bytes}) -> ProgramResult:
     engine.stdout.write(b"Hello world!\n")
-    return 0
+    return Success
