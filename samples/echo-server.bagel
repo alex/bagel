@@ -1,0 +1,13 @@
+from std import io
+
+
+class EchoProtocol:
+    transport: io.Transport
+
+    def on_data(self, data: Bytes):
+        self.transport.write(data)
+
+
+def main(engine: Engine, argv: Array{Bytes}) -> ProgramResult:
+    io.TCPServer(engine, port=1234).listen(io.ProtocolFactory(EchoProtocol))
+    return Success
