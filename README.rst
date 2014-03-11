@@ -6,3 +6,9 @@ There is no implementation yet, and there probably won't be for months.
 
 As each sample is added, it will be sent as a pull request in order to get
 feedback from trusted friends :-)
+
+Design
+------
+
+* bagel programs are statically linked. The result of compilation is a single,
+  isolated artifact.
