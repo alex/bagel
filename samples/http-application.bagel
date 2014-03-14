@@ -1,0 +1,13 @@
+from std.io.net import http
+
+
+def http_hello_world(request: http.HTTPRequest, response: http.HTTPResponse):
+    response.set_status_code(http.OK)
+    response.write(b"<h1>Hello world</h1>")
+    response.close()
+
+
+def main(engine: Engine, argv: Array{Bytes}) -> ProgramResult:
+    io.TCPServer(engine, port=8080).listen(
+        http.HTTPServerFactory(http_hello_world)
+    )
