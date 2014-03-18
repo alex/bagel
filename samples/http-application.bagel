@@ -13,3 +13,4 @@ def main(engine: Engine, argv: Array{Bytes}) -> ProgramResult:
     io.TCPServer(engine, port=8080).listen(
         http.HTTPServerFactory(http_hello_world)
     )
+    return Success
