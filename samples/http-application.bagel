@@ -6,7 +6,6 @@ def http_hello_world(request: http.HTTPRequest,
     response.write_status(http.OK)
     response.write_header(b"Content-Type", b"text/html")
     response.write(b"<h1>Hello world</h1>")
-    response.close()
 
 
 def main(engine: Engine, argv: Array{Bytes}) -> ProgramResult:
