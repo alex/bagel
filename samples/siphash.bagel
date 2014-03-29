@@ -50,10 +50,10 @@ def siphash_2_4(key: Bytes, data: Bytes) -> Result{UInt64, SiphashError}:
     k1 = UInt64.from_bytes(key[8:])
 
     state = [
-        k0 ^ _INIT_STATE[0],
-        k1 ^ _INIT_STATE[1],
-        k0 ^ _INIT_STATE[2],
-        k1 ^ _INIT_STATE[3],
+        k0 ^ UInt64(0x736f6d6570736575),
+        k1 ^ UInt64(0x646f72616e646f6d),
+        k0 ^ UInt64(0x6c7967656e657261),
+        k1 ^ UInt64(0x7465646279746573),
     ]
 
     for i in range(0, data.length() // 8):
