@@ -1,0 +1,12 @@
+from std import testing
+
+from . import siphash
+
+
+@testing.suite
+class TestSiphash:
+    @testing.test
+    def test_from_paper(self):
+        key = "\x00\x01\x02\x03\x04\x05\x06\x07\08\x09\x0a\x0b\x0c\x0d\x0e\x0f"
+        data = "\x00\x01\x02\x03\x04\x05\x06\x07\08\x09\x0a\x0b\x0c\x0d\x0e"
+        assert siphash.siphash_2_4(key, data) == 0xa129ca6149be45e5
