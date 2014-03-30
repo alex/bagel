@@ -46,8 +46,8 @@ def siphash_2_4(key: Bytes, data: Bytes) -> Result{UInt64, SiphashError}:
     if key.length() != 16:
         return Error(IncorrectKeyLength)
 
-    k0 = UInt64.from_bytes(key[:8])
-    k1 = UInt64.from_bytes(key[8:])
+    k0 = UInt64.from_le_bytes(key[:8])
+    k1 = UInt64.from_le_bytes(key[8:])
 
     state = [
         k0 ^ UInt64(0x736f6d6570736575),
@@ -57,7 +57,7 @@ def siphash_2_4(key: Bytes, data: Bytes) -> Result{UInt64, SiphashError}:
     ]
 
     for i in range(0, data.length() // 8):
-        _sipcompress(state, UInt64.from_bytes(data[i * 8:(i + 1) * 8]))
+        _sipcompress(state, UInt64.from_le_bytes(data[i * 8:(i + 1) * 8]))
     _sipcompress(state, _siplast(data))
 
     state[2] ^= 0xFF
