@@ -1,0 +1,68 @@
+enum class SiphashError:
+    IncorrectKeyLength
+
+
+def _rotate_left64(u: UInt64, s: Int) -> UInt64:
+    return (u << s) | (u >> (64 - s))
+
+
+def _sipround(state: Array{UInt64}):
+    state[0] += state[1]
+    state[1] = _rotate_left64(state[1], 13)
+    state[1] ^= state[0]
+    state[0] = _rotate_left64(state[0], 32)
+
+    state[2] += state[3]
+    state[3] = _rotate_left64(state[3], 16)
+    state[3] ^= state[2]
+
+    state[2] += state[1]
+    state[1] = _rotate_left64(state[1], 17)
+    state[1] ^= state[2]
+    state[2] = _rotate_left64(state[2], 32)
+
+    state[0] += state[3]
+    state[3] = _rotate_left64(state[3], 21)
+    state[3] ^= state[0]
+
+
+def _sipcompress(state: Array{UInt64}, UInt64 element):
+    state[3] ^= element
+    _sipround(state)
+    _sipround(state)
+    state[0] ^= element
+
+
+def _siplast(data: Bytes) -> UInt64:
+    last = UInt64(0)
+    for i in range(data.length() % 8):
+        last |= UInt64(data[size // 8 * 8 + 1]) << (i * 8)
+    last |= UInt64(data.length() % 256) << (7 * 8)
+    return last
+
+
+
+def siphash_2_4(key: Bytes, data: Bytes) -> Result{UInt64, SiphashError}:
+    if key.length() != 16:
+        return Error(IncorrectKeyLength)
+
+    k0 = UInt64.from_le_bytes(key[:8])
+    k1 = UInt64.from_le_bytes(key[8:])
+
+    state = [
+        k0 ^ UInt64(0x736f6d6570736575),
+        k1 ^ UInt64(0x646f72616e646f6d),
+        k0 ^ UInt64(0x6c7967656e657261),
+        k1 ^ UInt64(0x7465646279746573),
+    ]
+
+    for i in range(0, data.length() // 8):
+        _sipcompress(state, UInt64.from_le_bytes(data[i * 8:(i + 1) * 8]))
+    _sipcompress(state, _siplast(data))
+
+    state[2] ^= 0xFF
+
+    for i in range(4):
+        _sipround(state)
+
+    return Ok(state[0] ^ state[1] ^ state[2] ^ state[3])
