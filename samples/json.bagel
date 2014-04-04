@@ -15,8 +15,7 @@ class{T} JSONObjectEncoder:
         # compile time constants?
         for field in reflect.get_fields{T}():
             self._write_key(field.name)
-            field_encoder = self._get_field_encoder{field}()
-            field_encoder.encode(reflect.read_field{field}(obj))
+            self._write_field{field}(obj)
         self._write_end_object()
 
     def _write_start_object(self):
@@ -28,12 +27,16 @@ class{T} JSONObjectEncoder:
         self._write.write(field.encode("utf-8"))
         self._writer.write('":')
 
-    def{field} _get_field_encoder(self) -> _JSONEncoder:
+    def{field} _writer_field(self, obj: T):
         match field.type:
             as Text:
-                return _JSONTextEncoder(writer=self._writer)
+                _JSONTextEncoder(writer=self._writer).encode(
+                    reflect.read_field{field}(obj)
+                )
             as Int:
-                return _JSONIntegerEncoder(writer=self._writer)
+                _JSONIntegerEncoder(writer=self._writer).encode(
+                    reflect.read_field{field}(obj)
+                )
             default:
                 # Is this the right API?
                 panic("Unknown type {}".format(field.type.name))
