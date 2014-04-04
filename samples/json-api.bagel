@@ -1,0 +1,25 @@
+from std import io, json
+from std.io.net import http
+
+
+class Resource:
+    name: Text
+    version: Int
+
+ResourceJSONEncoder = json.JSONEncoder{
+    json.JSONObjectEncoder{Resource}
+}
+
+def http_json_hello_world(request: http.HTTPRequest,
+                          response: http.HTTPResponseWriter):
+    r = Resource(name="Hello object", version=72)
+    response.write_status(http.OK)
+    response.write_header(b"Content-Type", b"application/json")
+    ResourceJSONEncoder(response).encode(r)
+
+
+def main(engine: Engine, argv: Array{Bytes}) -> ProgramResult:
+    io.TCPServer(engine, port=8080).listen(
+        http.HTTPServerFactory(http_json_hello_world)
+    )
+    return Success
