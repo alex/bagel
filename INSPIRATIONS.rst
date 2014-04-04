@@ -12,7 +12,7 @@ Inspirations
 
 * Twisted
 
-  * Protocol/Transport seperation
+  * Protocol/Transport separation
   * Endpoints
 
 * Golang
