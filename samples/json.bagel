@@ -1,0 +1,53 @@
+from std import io
+from std.meta import reflect
+
+
+class{T} JSONObjectEncoder:
+    _writer: io.Writer
+
+    def __new__(writer: io.Writer):
+        return new(JSONObjectEncoder, _writer=writer)
+
+    def encode(self, obj: T):
+        self._write_start_object()
+        # How is it communicated that the return value is a compile time
+        # constant, and iterating over it is unrolled and the values are also
+        # compile time constants?
+        for field in reflect.get_fields{T}():
+            self._write_key(field.name)
+            field_encoder = self._get_field_encoder{field}()
+            field_encoder.encode(reflect.read_field{field}(obj))
+        self._write_end_object()
+
+    def _write_start_object(self):
+        self._writer.write(b"{")
+
+    def _write_key(self, field: Text):
+        self._write.write('"')
+        # TODO: not technically correct.
+        self._write.write(field.encode("utf-8"))
+        self._writer.write('":')
+
+    def{field} _get_field_encoder(self) -> _JSONEncoder:
+        match field.type:
+            as Text:
+                return _JSONTextEncoder(writer=self._writer)
+            as Int:
+                return _JSONIntegerEncoder(writer=self._writer)
+            default:
+                # Is this the right API?
+                panic("Unknown type {}".format(field.type.name))
+
+class _JSONTextEncoder:
+    writer: io.Writer
+
+    def encode(self, t: Text):
+        # TODO: not technically correct.
+        self.writer.write(t.encode("utf-8"))
+
+
+class _JSONIntegerEncoder:
+    writer: io.Writer
+
+    def encode(self, t: Int):
+        self.writer.write(t.to_text().encode("utf-8"))
