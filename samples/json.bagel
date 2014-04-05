@@ -9,17 +9,19 @@ class{T} JSONObjectEncoder:
         return new(JSONObjectEncoder, _writer=writer)
 
     def encode(self, obj: T):
-        self._write_start_object()
+        self._writer.write(b"{")
         # How is it communicated that the return value is a compile time
         # constant, and iterating over it is unrolled and the values are also
         # compile time constants?
+        first = False
         for field in reflect.get_fields{T}():
+            if not first:
+                self._writer.write(b",")
+            else:
+                first = True
             self._write_key(field.name)
             self._write_field{field}(obj)
-        self._write_end_object()
-
-    def _write_start_object(self):
-        self._writer.write(b"{")
+        self._writer.write(b"}")
 
     def _write_key(self, field: Text):
         self._write.write('"')
