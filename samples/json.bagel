@@ -2,7 +2,7 @@ from std import io
 from std.meta import reflect
 
 
-class{T} JSONObjectEncoder:
+class JSONObjectEncoder{T}:
     _writer: io.Writer
 
     def __new__(writer: io.Writer):
@@ -24,7 +24,7 @@ class{T} JSONObjectEncoder:
             self._write_field{field}(obj)
         self._writer.write(b"}")
 
-    def{field} _writer_field(self, obj: T):
+    def _writer_field{field}(self, obj: T):
         match field.type:
             as Text:
                 _JSONTextEncoder(writer=self._writer).encode(
@@ -34,9 +34,16 @@ class{T} JSONObjectEncoder:
                 _JSONIntegerEncoder(writer=self._writer).encode(
                     reflect.read_field{field}(obj)
                 )
-            default:
-                # Is this the right API?
-                panic("Unknown type {}".format(field.type.name))
+            as Bool:
+                _JSONBoolEncoder(writer=self._writer).encode(
+                    reflect.read_field{field}(obj)
+                )
+            as Option{K}:
+                _JSONOptionEncoder{K}(writer=self._writer).encode(
+                    reflect.read_field{field}(obj)
+                )
+            else:
+                static_assert_unreachable()
 
 class _JSONTextEncoder:
     writer: io.Writer
@@ -53,3 +60,33 @@ class _JSONIntegerEncoder:
 
     def encode(self, t: Int):
         self.writer.write(t.to_text().encode("utf-8"))
+
+
+class _JSONBoolEncoder:
+    writer: io.Writer
+
+    def encode(self, b: Bool):
+        if b:
+            self.writer.write(b"true")
+        else:
+            self.writer.write(b"false")
+
+
+class _JSONOptionEncoder{K}:
+    writer: io.Writer
+
+    def encode(self, o: Option{K}):
+        match o:
+            as Some(x):
+                match K:
+                    # TODO: duplication
+                    as Text:
+                        _JSONTextEncoder(writer=self._writer).encode(x)
+                    as Int:
+                        _JSONIntegerEncoder(writer=self._writer).encode(x)
+                    as Bool:
+                        _JSONBoolEncoder(writer=self._writer).encode(x)
+                    else:
+                        static_assert_unreachable()
+            as None:
+                self.writer.write(b"null")
