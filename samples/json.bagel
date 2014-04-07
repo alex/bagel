@@ -17,7 +17,7 @@ def _get_default_encoder{T}(writer: io.Writer) -> _JSONEncoder{T}:
         as Option{K}:
             return _JSONOptionEncoder{K}(writer=self._writer)
         as Array{K}:
-            return _JSONArrayEncoder{K}(writer=self._writer)
+            return JSONArrayEncoder{K}(writer=self._writer)
         else:
             static_assert_unreachable()
 
@@ -25,7 +25,7 @@ def _get_default_encoder{T}(writer: io.Writer) -> _JSONEncoder{T}:
 class JSONObjectEncoder{T}:
     _writer: io.Writer
 
-    def __new__(writer: io.Writer):
+    def __new__(writer: io.Writer) -> JSONObjectEncoder{T}:
         return new(JSONObjectEncoder, _writer=writer)
 
     def encode(self, obj: T):
@@ -47,8 +47,11 @@ class JSONObjectEncoder{T}:
         self._writer.write(b"}")
 
 
-class _JSONArrayEncoder{T}:
-    writer: io.Writer
+class JSONArrayEncoder{T}:
+    _writer: io.Writer
+
+    def __new__(writer: io.Writer) -> JSONArrayEncoder{T}:
+        return new(JSONArrayEncoder, _writer=writer)
 
     def encode(self, d: Array{T}):
         self.writer.write(b"[")
