@@ -2,6 +2,10 @@ from std import io
 from std.meta import reflect
 
 
+interface class _JSONEncoder{T}:
+    def encode(self, obj: T)
+
+
 def _get_default_encoder{T}(writer: io.Writer) -> _JSONEncoder{T}:
     match T:
         as Text:
