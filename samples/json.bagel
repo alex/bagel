@@ -72,12 +72,12 @@ class _JSONBoolEncoder:
             self.writer.write(b"false")
 
 
-class _JSONOptionEncoder{K}:
+class _JSONOptionEncoder{T}:
     writer: io.Writer
 
-    def encode(self, o: Option{K}):
+    def encode(self, o: Option{T}):
         match o:
             as Some(x):
-                _get_default_encoder{K}(self._writer).encode(x)
+                _get_default_encoder{T}(self._writer).encode(x)
             as None:
                 self.writer.write(b"null")
