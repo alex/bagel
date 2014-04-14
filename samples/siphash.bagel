@@ -6,7 +6,7 @@ def _rotate_left64(u: UInt64, s: Int) -> UInt64:
     return (u << s) | (u >> (64 - s))
 
 
-def _sipround(state: Array{UInt64}):
+def _sipround(state: Array<UInt64>):
     state[0] += state[1]
     state[1] = _rotate_left64(state[1], 13)
     state[1] ^= state[0]
@@ -26,7 +26,7 @@ def _sipround(state: Array{UInt64}):
     state[3] ^= state[0]
 
 
-def _sipcompress(state: Array{UInt64}, UInt64 element):
+def _sipcompress(state: Array<UInt64>, UInt64 element):
     state[3] ^= element
     _sipround(state)
     _sipround(state)
@@ -42,7 +42,7 @@ def _siplast(data: Bytes) -> UInt64:
 
 
 
-def siphash_2_4(key: Bytes, data: Bytes) -> Result{UInt64, SiphashError}:
+def siphash_2_4(key: Bytes, data: Bytes) -> Result<UInt64, SiphashError>:
     if key.length() != 16:
         return Error(IncorrectKeyLength)
 
