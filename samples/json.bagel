@@ -2,11 +2,11 @@ from std import io
 from std.meta import reflect
 
 
-interface class _JSONEncoder{T}:
+interface class _JSONEncoder<T>:
     def encode(self, obj: T)
 
 
-def _get_default_encoder{T}(writer: io.Writer) -> _JSONEncoder{T}:
+def _get_default_encoder<T>(writer: io.Writer) -> _JSONEncoder<T>:
     match T:
         as Text:
             return _JSONTextEncoder(writer=self._writer)
@@ -14,18 +14,18 @@ def _get_default_encoder{T}(writer: io.Writer) -> _JSONEncoder{T}:
             return _JSONIntegerEncoder(writer=self._writer)
         as Bool:
             return _JSONBoolEncoder(writer=self._writer)
-        as Option{K}:
-            return _JSONOptionEncoder{K}(writer=self._writer)
-        as Array{K}:
-            return JSONArrayEncoder{K}(writer=self._writer)
+        as Option<K>:
+            return _JSONOptionEncoder<K>(writer=self._writer)
+        as Array<K>:
+            return JSONArrayEncoder<K>(writer=self._writer)
         else:
             static_assert_unreachable()
 
 
-class JSONObjectEncoder{T}:
+class JSONObjectEncoder<T>:
     _writer: io.Writer
 
-    def __new__(writer: io.Writer) -> JSONObjectEncoder{T}:
+    def __new__(writer: io.Writer) -> JSONObjectEncoder<T>:
         return new(JSONObjectEncoder, _writer=writer)
 
     def encode(self, obj: T):
@@ -34,26 +34,26 @@ class JSONObjectEncoder{T}:
         # constant, and iterating over it is unrolled and the values are also
         # compile time constants?
         first = False
-        for field in reflect.get_fields{T}():
+        for field in reflect.get_fields<T>():
             if not first:
                 self._writer.write(b",")
             else:
                 first = True
             _JSONTextEncoder(writer=self._writer).encode(field.name)
             self._writer.write(b":")
-            _get_default_encoder{field.type}(self._writer).encode(
-                reflect.read_field{field}(obj)
+            _get_default_encoder<field.type>(self._writer).encode(
+                reflect.read_field<field>(obj)
             )
         self._writer.write(b"}")
 
 
-class JSONArrayEncoder{T}:
+class JSONArrayEncoder<T>:
     _writer: io.Writer
 
-    def __new__(writer: io.Writer) -> JSONArrayEncoder{T}:
+    def __new__(writer: io.Writer) -> JSONArrayEncoder<T>:
         return new(JSONArrayEncoder, _writer=writer)
 
-    def encode(self, d: Array{T}):
+    def encode(self, d: Array<T>):
         self.writer.write(b"[")
         first = False
         for elem in d.iter():
@@ -61,7 +61,7 @@ class JSONArrayEncoder{T}:
                 self.writer.write(b",")
             else:
                 first = True
-            _get_default_encoder{T}(self._writer).encode(elem)
+            _get_default_encoder<T>(self._writer).encode(elem)
         self.writer.write(b"]")
 
 
@@ -92,12 +92,12 @@ class _JSONBoolEncoder:
             self.writer.write(b"false")
 
 
-class _JSONOptionEncoder{T}:
+class _JSONOptionEncoder<T>:
     writer: io.Writer
 
-    def encode(self, o: Option{T}):
+    def encode(self, o: Option<T>):
         match o:
             as Some(x):
-                _get_default_encoder{T}(self._writer).encode(x)
+                _get_default_encoder<T>(self._writer).encode(x)
             as None:
                 self.writer.write(b"null")
