@@ -6,9 +6,7 @@ class Resource:
     name: Text
     version: Int
 
-ResourceJSONEncoder = json.JSONEncoder<
-    json.JSONObjectEncoder<Resource>
->
+ResourceJSONEncoder = json.JSONObjectEncoder<Resource>
 
 def http_json_hello_world(request: http.HTTPRequest,
                           response: http.HTTPResponseWriter):
