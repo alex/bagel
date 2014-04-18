@@ -16,7 +16,7 @@ def http_json_hello_world(request: http.HTTPRequest,
     ResourceJSONEncoder(response).encode(r)
 
 
-def main(argv: Array<Bytes>) -> ProgramResult:
+def main() -> ProgramResult:
     io.TCPServer(port=8080).listen(
         http.HTTPServerFactory(http_json_hello_world)
     )
