@@ -1,3 +1,6 @@
-def main(engine: Engine, argv: Array<Bytes>) -> ProgramResult:
-    engine.stdout.write(b"Hello world!\n")
+from std.io import StdIO
+
+
+def main(stdio: StdIO, argv: Array<Bytes>) -> ProgramResult:
+    stdio.out.write(b"Hello world!\n")
     return Success

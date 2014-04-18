@@ -9,8 +9,8 @@ def http_hello_world(request: http.HTTPRequest,
     response.write(b"<h1>Hello world</h1>")
 
 
-def main(engine: Engine, argv: Array<Bytes>) -> ProgramResult:
-    io.TCPServer(engine, port=8080).listen(
+def main(argv: Array<Bytes>) -> ProgramResult:
+    io.TCPServer(port=8080).listen(
         http.HTTPServerFactory(http_hello_world)
     )
     return Success

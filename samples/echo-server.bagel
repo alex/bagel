@@ -8,6 +8,6 @@ class EchoProtocol:
         self.transport.write(data)
 
 
-def main(engine: Engine, argv: Array<Bytes>) -> ProgramResult:
-    io.TCPServer(engine, port=1234).listen(io.ProtocolFactory<EchoProtocol>())
+def main(argv: Array<Bytes>) -> ProgramResult:
+    io.TCPServer(port=1234).listen(io.ProtocolFactory<EchoProtocol>())
     return Success
