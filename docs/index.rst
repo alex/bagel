@@ -19,6 +19,7 @@ Bagel is:
 * Statically compiled
 * Garbage collected
 * Statically linked - The result of compilation is a single, isolated artifact.
+* Concurrent and parallel
 
 Bagel is designed for:
 
@@ -27,8 +28,16 @@ Bagel is designed for:
 * Type safety and memory safety
 * Primarily writing network services
 * Performance
+* Helping you write better programs
 
 Bagel is **not** designed for:
 
 * Interoperability with legacy programming languages
 * Being 100% as fast as possible, 95% is fine.
+
+As a result, some of the features Bagel has are:
+
+* Interfaces
+* Powerful enums
+* Compile time reflection and metaprogramming
+* Powerful testing tools
