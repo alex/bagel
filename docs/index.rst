@@ -40,5 +40,6 @@ As a result, some of the features Bagel has are:
 
 * Interfaces
 * Powerful enums
+* Pattern matching
 * Compile time reflection and metaprogramming
 * Powerful testing tools
