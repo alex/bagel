@@ -20,6 +20,7 @@ Bagel is:
 * Garbage collected
 * Statically linked - The result of compilation is a single, isolated artifact.
 * Concurrent and parallel
+* Fun to use
 
 Bagel is designed for:
 
