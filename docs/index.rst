@@ -9,3 +9,37 @@ bagel program, the famous "Hello World" program::
 
     def main(stdio: StdIO) -> ProgramResult:
         stdio.out.write(b"Hello World\n")
+
+Design goals
+------------
+
+Bagel is:
+
+* Statically typed
+* Statically compiled
+* Garbage collected
+* Statically linked - The result of compilation is a single, isolated artifact.
+* Concurrent and parallel
+* Fun to use
+
+Bagel is designed for:
+
+* Readability above writeability
+* Encouraging testable programs
+* Type safety and memory safety
+* Primarily writing network services
+* Performance
+* Helping you write better programs
+
+Bagel is **not** designed for:
+
+* Interoperability with legacy programming languages
+* Being 100% as fast as possible, 95% is fine.
+
+As a result, some of the features Bagel has are:
+
+* Interfaces
+* Powerful enums
+* Pattern matching
+* Compile time reflection and metaprogramming
+* Powerful testing tools
