@@ -20,7 +20,7 @@ Then we can declare functions which take one of these values, and use
 
 The Bagel compiler will make sure that you handle all possible cases, so if you
 add a new value to ``MeasuringSystem`` without adding handling to
-``distance_unit`` you will get a compilation error, tell you about the
+``distance_unit`` you will get a compilation error, telling you about the
 unhandled case.
 
 Unlike many programming languages, Bagel's enums can contain other values::
@@ -29,8 +29,7 @@ Unlike many programming languages, Bagel's enums can contain other values::
         Inches(UInt)
         Feet(UInt)
 
-Again, we can use pattern matching to handle these values, also unpacking the
-value::
+Again, we can use pattern matching to handle these, also unpacking the values::
 
     def distance_in_inches(d: Distance) -> UInt:
         match d:
@@ -42,7 +41,7 @@ value::
 Enum values are immutable, after creating one, it's not possible to change any
 of the values inside of it.
 
-You can make use of both of these features in a single enum. Also, when an enum
+You can make use of both of these features in a single enum. When an enum
 contains another value, it can optionally be given a label::
 
     enum class TalkSubmissionStatus:
