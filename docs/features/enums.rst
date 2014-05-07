@@ -25,7 +25,7 @@ unhandled case.
 
 Unlike many programming languages, Bagel's enums can contain other values::
 
-    enum class Distance
+    enum class Distance:
         Inches(UInt)
         Feet(UInt)
 
