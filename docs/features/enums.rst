@@ -41,3 +41,21 @@ value::
 
 Enum values are immutable, after creating one, it's not possible to change any
 of the values inside of it.
+
+You can make use of both of these features in a single enum. Also, when an enum
+contains another value, it can optionally be given a label::
+
+    enum class TalkSubmissionStatus:
+        Accepted
+        InReview
+        Rejected(reason: Text)
+
+
+    def talk_status_notice(status: TalkSubmissionStatus) -> Text:
+        match status:
+            as Accepted:
+                return "Your talk was accepted"
+            as InReview:
+                return "Your talk is still being reviewed"
+            as Rejected(reason):
+                return reason
