@@ -20,13 +20,13 @@ Bagel is:
 * Garbage collected
 * Statically linked - The result of compilation is a single, isolated artifact.
 * Concurrent and parallel
+* Type safe and memory safe
 * Fun to use
 
 Bagel is designed for:
 
 * Readability above writeability
 * Encouraging testable programs
-* Type safety and memory safety
 * Primarily writing network services
 * Performance
 * Helping you write better programs
