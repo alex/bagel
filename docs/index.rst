@@ -9,6 +9,7 @@ bagel program, the famous "Hello World" program::
 
     def main(stdio: StdIO) -> ProgramResult:
         stdio.out.write(b"Hello World\n")
+        return Success
 
 Design goals
 ------------
