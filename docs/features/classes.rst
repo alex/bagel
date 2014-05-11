@@ -26,3 +26,5 @@ We can define methods on our ``Point`` class::
 Then we can easily call these this method::
 
     new_p = p.translate(-1, -1, 0)
+
+Unlike many other object-oriented languages, in Bagel there is not inheritance.
