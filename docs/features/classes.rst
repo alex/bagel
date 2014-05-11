@@ -12,7 +12,7 @@ many other object-oriented languages, in Bagel there is no inheritance::
 
 Here we've defined a class, ``Point``, with three fields, ``x``, ``y``, and
 ``z``, all of which are ``Ints``. Classes with all :term:`public` fields get a
-default constrcutor, so we can easily create a point instance::
+default constructor, so we can easily create a point instance::
 
     p = Point(x=1, y=2, z=3)
 
@@ -39,9 +39,23 @@ add the ``mutable`` keyword to the field definitions::
         mutable x: Int
         mutable y: Int
 
-Now::
+Now we can do::
 
     p = Point(x=1, y=2)
     p.x = 5
 
-Works.
+If you want your class to have a constructor other than the default one, you
+can acheive this by adding an ``__new__`` method::
+
+    class Point:
+        x: Int
+        y: Int
+        z: Int
+
+        def __new__(x: Int, y: Int, z=0: Int) -> Point:
+            return new(Point, x=x, y=y, z=z)
+
+Now we can create point instances with or without the ``z`` argument. The
+``__new__`` function is invoked when we call ``Point()``. The ``new()``
+function takes a class, and invokes the default constructor, returning a new
+instance of the class.
