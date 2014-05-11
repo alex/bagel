@@ -52,4 +52,5 @@ Language features
 .. toctree::
 
     features/type-inference
+    features/classes
     features/enums
