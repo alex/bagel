@@ -2,7 +2,8 @@ Classes
 =======
 
 Bagel is an object-oriented programming language, in the sense that you can
-define classes and assosciate data and functions with them::
+define classes and assosciate data and functions with them. However, unlike
+many other object-oriented languages, in Bagel there is no inheritance::
 
     class Point:
         x: Int
@@ -27,4 +28,20 @@ Then we can easily call these this method::
 
     new_p = p.translate(-1, -1, 0)
 
-Unlike many other object-oriented languages, in Bagel there is not inheritance.
+By default, all fields on a class are immutable, meaning code like::
+
+    p.x = 2
+
+Causes a compilation error. If we want to create a mutable ``Point``, we can
+add the ``mutable`` keyword to the field definitions::
+
+    class Point:
+        mutable x: Int
+        mutable y: Int
+
+Now::
+
+    p = Point(x=1, y=2)
+    p.x = 5
+
+Works.
