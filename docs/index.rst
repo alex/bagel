@@ -53,4 +53,5 @@ Language features
 
     features/type-inference
     features/classes
+    features/interfaces
     features/enums

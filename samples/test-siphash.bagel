@@ -7,7 +7,7 @@ class TestSiphash:
     def test_from_paper(self):
         key = b"\x00\x01\x02\x03\x04\x05\x06\x07\08\x09\x0a\x0b\x0c\x0d\x0e\x0f"
         data = b"\x00\x01\x02\x03\x04\x05\x06\x07\08\x09\x0a\x0b\x0c\x0d\x0e"
-        assert siphash.siphash_2_4(key, data).assert_success() == 0xa129ca6149be45e5
+        assert siphash_2_4(key, data).assert_success() == 0xa129ca6149be45e5
 
     def test_invalid_key_length(self):
         assert siphash_2_4(b"abc", b"").assert_failure() is IncorrectKeyLength
