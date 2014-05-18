@@ -33,8 +33,8 @@ Next we can write code which uses this interface::
 We can call ``cached_expensive_computation`` with any class which satisfies
 this interface.
 
-To satisfy the interface, all we need to do is define a class with these
-methods::
+To satisfy the interface, all we need to do is define a class with ``get`` and
+``set`` methods with appropriate signatures::
 
     class InMemoryCache:
         _data: Dict<Bytes, Bytes>
