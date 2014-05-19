@@ -12,12 +12,12 @@ Bagel doesn't have subclassing.
 
 First, we write our interface::
 
-    interface class CacheClient
+    interface class CacheClient:
         def get(self, key: Bytes) -> Option<Bytes>
         def set(self, key: Bytes, value: Bytes)
 
 This says that to implement the ``CacheClient`` interface, a class must define
-``get`` and ``set`` methods, which those signatures.
+``get`` and ``set`` methods, with those signatures.
 
 Next we can write code which uses this interface::
 
