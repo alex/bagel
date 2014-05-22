@@ -45,7 +45,7 @@ Now we can do::
     p.x = 5
 
 If you want your class to have a constructor other than the default one, you
-can acheive this by adding an ``__new__`` method::
+can achieve this by adding an ``__new__`` method::
 
     class Point:
         x: Int
