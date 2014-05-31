@@ -35,8 +35,8 @@ automatically fetch the ``cream-cheese`` and ``lox`` packages.
 
 One common issue that arises with packging is multiple dependencies, which
 require different versions of the same package. To solve this, Bagel allows a
-package to define :term:`internal dependencies`. Each package's internal
-dependencies are allowed to have conflicting versions with any other package's
+package to define :term:`internal dependencies`. A package's internal
+dependencies are allowed to have version conflicts with other package's
 dependencies. The only limitation is that no part of the public API may use
 something from this package.
 
