@@ -37,8 +37,8 @@ One common issue that arises with packging is multiple dependencies, which
 require different versions of the same package. To solve this, Bagel allows a
 package to define :term:`internal dependencies`. A package's internal
 dependencies are allowed to have version conflicts with other package's
-dependencies. The only limitation is that no part of the public API may use
-something from this package.
+dependencies. The only limitation is that no part of the :term:`public` API may
+use something from this package.
 
 .. code-block:: cfg
 
