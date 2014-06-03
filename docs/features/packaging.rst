@@ -1,14 +1,14 @@
 Packaging and Build System
 ==========================
 
-Running a Bagel program is easy:
+Running a Bagel program is a single command:
 
 .. code-block:: console
 
     $ bagel run hello.bagel
     Hello World
 
-Building an executable is also easy:
+Building an executable is also a single command:
 
 .. code-block:: console
 
