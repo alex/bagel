@@ -9,15 +9,15 @@ interface class _JSONEncoder<T>:
 def _get_default_encoder<T>(writer: io.Writer) -> _JSONEncoder<T>:
     match T:
         as Text:
-            return _JSONTextEncoder(writer=self._writer)
+            return _JSONTextEncoder.new(writer=self._writer)
         as Int:
-            return _JSONIntegerEncoder(writer=self._writer)
+            return _JSONIntegerEncoder.new(writer=self._writer)
         as Bool:
-            return _JSONBoolEncoder(writer=self._writer)
+            return _JSONBoolEncoder.new(writer=self._writer)
         as Option<K>:
-            return _JSONOptionEncoder<K>(writer=self._writer)
+            return _JSONOptionEncoder<K>.new(writer=self._writer)
         as Array<K>:
-            return JSONArrayEncoder<K>(writer=self._writer)
+            return JSONArrayEncoder<K>.new(writer=self._writer)
         else:
             static_assert_unreachable()
 
@@ -25,7 +25,7 @@ def _get_default_encoder<T>(writer: io.Writer) -> _JSONEncoder<T>:
 class JSONObjectEncoder<T>:
     _writer: io.Writer
 
-    def __new__(writer: io.Writer) -> JSONObjectEncoder<T>:
+    classdef new(writer: io.Writer) -> JSONObjectEncoder<T>:
         return new(JSONObjectEncoder<T>, _writer=writer)
 
     def encode(self, obj: T):
@@ -39,7 +39,7 @@ class JSONObjectEncoder<T>:
                 self._writer.write(b",")
             else:
                 first = True
-            _JSONTextEncoder(writer=self._writer).encode(field.name)
+            _JSONTextEncoder.new(writer=self._writer).encode(field.name)
             self._writer.write(b":")
             _get_default_encoder<field.type>(self._writer).encode(
                 reflect.read_field<field>(obj)
@@ -50,7 +50,7 @@ class JSONObjectEncoder<T>:
 class JSONArrayEncoder<T>:
     _writer: io.Writer
 
-    def __new__(writer: io.Writer) -> JSONArrayEncoder<T>:
+    classdef new(writer: io.Writer) -> JSONArrayEncoder<T>:
         return new(JSONArrayEncoder<T>, _writer=writer)
 
     def encode(self, d: Array<T>):
@@ -68,7 +68,7 @@ class JSONArrayEncoder<T>:
 class _JSONTextEncoder:
     _writer: io.Writer
 
-    def __new__(writer: io.Writer) -> _JSONTextEncoder:
+    classdef new(writer: io.Writer) -> _JSONTextEncoder:
         return new(_JSONTextEncoder, _writer=writer)
 
     def encode(self, t: Text):
@@ -81,7 +81,7 @@ class _JSONTextEncoder:
 class _JSONIntegerEncoder:
     _writer: io.Writer
 
-    def __new__(writer: io.Writer) -> _JSONIntegerEncoder:
+    classdef new(writer: io.Writer) -> _JSONIntegerEncoder:
         return new(_JSONIntegerEncoder, _writer=writer)
 
     def encode(self, t: Int):
@@ -91,7 +91,7 @@ class _JSONIntegerEncoder:
 class _JSONBoolEncoder:
     _writer: io.Writer
 
-    def __new__(writer: io.Writer) -> _JSONBoolEncoder:
+    classdef new(writer: io.Writer) -> _JSONBoolEncoder:
         return new(_JSONBoolEncoder, _writer=writer)
 
     def encode(self, b: Bool):
@@ -104,7 +104,7 @@ class _JSONBoolEncoder:
 class _JSONOptionEncoder<T>:
     _writer: io.Writer
 
-    def __new__(writer: io.Writer) -> _JSONOptionEncoder<T>:
+    classdef new(writer: io.Writer) -> _JSONOptionEncoder<T>:
         return new(_JSONOptionEncoder<T>, _writer=writer)
 
     def encode(self, o: Option<T>):
