@@ -20,4 +20,4 @@ def main() -> ProgramResult:
     io.TCPServer.new(port=8080).listen(
         http.HTTPServerFactory.new(http_json_hello_world)
     )
-    return Success
+    return ProgramResult.Success
