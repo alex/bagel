@@ -39,7 +39,7 @@ class JSONObjectEncoder<T>:
                 self._writer.write(b",")
             else:
                 first = True
-            _JSONTextEncoder.new(writer=self._writer).encode(field.name)
+            _JSONTextEncoder(writer=self._writer).encode(field.name)
             self._writer.write(b":")
             _get_default_encoder<field.type>(self._writer).encode(
                 reflect.read_field<field>(obj)
