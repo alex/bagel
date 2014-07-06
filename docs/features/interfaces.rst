@@ -39,8 +39,8 @@ To satisfy the interface, all we need to do is define a class with ``get`` and
     class InMemoryCache:
         _data: Dict<Bytes, Bytes>
 
-        def __new__() -> InMemoryCache:
-            return new(InMemoryCache, _data={})
+        classdef new() -> CacheClient:
+            return InMemoryCache(_data={})
 
         def get(self, key: Bytes) -> Option<Bytes>:
             return self._data.get(key)

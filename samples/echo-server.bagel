@@ -9,5 +9,5 @@ class EchoProtocol:
 
 
 def main() -> ProgramResult:
-    io.TCPServer.new(port=1234).listen(io.ProtocolFactory<EchoProtocol>.new())
+    io.TCPServer.new(port=1234).listen(io.ProtocolFactory<EchoProtocol>())
     return Success

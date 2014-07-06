@@ -44,7 +44,7 @@ def _siplast(data: Bytes) -> UInt64:
 
 def siphash_2_4(key: Bytes, data: Bytes) -> Result<UInt64, SiphashError>:
     if key.length() != 16:
-        return Error.new(IncorrectKeyLength)
+        return Error(IncorrectKeyLength)
 
     k0 = UInt64.from_le_bytes(key[:8])
     k1 = UInt64.from_le_bytes(key[8:])
@@ -65,4 +65,4 @@ def siphash_2_4(key: Bytes, data: Bytes) -> Result<UInt64, SiphashError>:
     for i in range(4):
         _sipround(state)
 
-    return Ok.new(state[0] ^ state[1] ^ state[2] ^ state[3])
+    return Ok(state[0] ^ state[1] ^ state[2] ^ state[3])
