@@ -50,3 +50,25 @@ use something from this package.
         internal-dependencies:
             # Other packages may use other versions of lox.
             - lox==1.2
+
+By default, ``bagel`` will fetch all of your dependencies from the central
+``bagel`` package repository. However, packages can also specific other
+locations to get packages from, either in addition to the default servers, or
+in stead of. This can be used to either set up a local mirror, or to host non-
+public packages:
+
+.. code-block:: yaml
+
+    package-indexes:
+        # This is the default root server, you can provide your own!
+        root-index: packages.bagel.bagel
+        # These servers will also be checked.
+        additional-indexes:
+            - bagel-packages.my-company.com
+
+.. note::
+
+    Be aware, the ``package-indexes`` value will only be respected in the root
+    ``.bagel-conf`` file. Dependencies cannot specify additional locations to
+    find packages, this is to prevent a dependency from forcing you to get
+    packages from a different location.
