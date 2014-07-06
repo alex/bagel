@@ -23,12 +23,12 @@ CPU architecture as the machine it was compiled on.
 To use a third-party package in your Bagel program, you can create a
 ``hello.bagel-conf`` and specify the needed packages:
 
-.. code-block:: cfg
+.. code-block:: yaml
 
-    [package]
-    dependencies =
-        cream-cheese
-        lox
+    package:
+        dependencies:
+            - cream-cheese
+            - lox
 
 Now when you run ``bagel run`` or ``bagel build``, the compiler will
 automatically fetch the ``cream-cheese`` and ``lox`` packages.
@@ -40,12 +40,13 @@ dependencies are allowed to have version conflicts with other package's
 dependencies. The only limitation is that no part of the :term:`public` API may
 use something from this package.
 
-.. code-block:: cfg
+.. code-block:: yaml
 
-    [package]
-    dependencies =
-        # Everything in the system must use the 1.0 version of cream-cheese.
-        cream-cheese==1.0
-    internal-dependencies =
-        # Other packages may use other versions of lox.
-        lox==1.2
+    package:
+        dependencies:
+            # Everything in the system must use the 1.0 version of cream-cheese.
+            - cream-cheese==1.0
+
+        internal-dependencies:
+            # Other packages may use other versions of lox.
+            - lox==1.2
