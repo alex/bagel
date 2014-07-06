@@ -10,7 +10,7 @@ def http_hello_world(request: http.HTTPRequest,
 
 
 def main() -> ProgramResult:
-    io.TCPServer(port=8080).listen(
-        http.HTTPServerFactory(http_hello_world)
+    io.TCPServer.new(port=8080).listen(
+        http.HTTPServerFactory.new(http_hello_world)
     )
     return Success

@@ -1,6 +1,6 @@
 from std import testing
 
-from siphash import siphash_2_4, IncorrectKeyLength
+from siphash import siphash_2_4, SiphashError
 
 
 class TestSiphash:
@@ -10,4 +10,5 @@ class TestSiphash:
         assert siphash_2_4(key, data).assert_success() == 0xa129ca6149be45e5
 
     def test_invalid_key_length(self):
-        assert siphash_2_4(b"abc", b"").assert_failure() is IncorrectKeyLength
+        result = siphash_2_4(b"abc", b"")
+        assert result.assert_failure() == SiphashError.IncorrectKeyLength
