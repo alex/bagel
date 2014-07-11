@@ -73,7 +73,7 @@ Alternate package repositories
 ------------------------------
 
 By default, ``bagel`` will fetch all of your dependencies from the central
-``bagel`` package repository. However, packages can also specific other
+``bagel`` package repository. However, packages can also specify other
 locations to get packages from, either in addition to the default servers, or
 in stead of. This can be used to either set up a local mirror, or to host non-
 public packages:
