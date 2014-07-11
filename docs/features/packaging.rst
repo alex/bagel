@@ -27,11 +27,28 @@ To use a third-party package in your Bagel program, you can create a
 
     package:
         dependencies:
-            - cream-cheese
+            - cream_cheese
             - lox
 
 Now when you run ``bagel run`` or ``bagel build``, the compiler will
-automatically fetch the ``cream-cheese`` and ``lox`` packages.
+automatically fetch the ``cream_cheese`` and ``lox`` packages from the central
+``bagel`` package repository.
+
+Now your code will be able to import things from these libraries::
+
+    from cream_cheese import Schmear
+
+You can also install packages from a version control system:
+
+.. code-block:: yaml
+
+    package:
+        dependencies:
+            - name: lox
+              repository: git://github.com/alex/lox
+
+Internal Dependencies
+---------------------
 
 One common issue that arises with packging is multiple dependencies, which
 require different versions of the same package. To solve this, Bagel allows a
@@ -44,12 +61,16 @@ use something from this package.
 
     package:
         dependencies:
-            # Everything in the system must use the 1.0 version of cream-cheese.
-            - cream-cheese==1.0
+            # Everything in the system must use the 1.0 version of
+            # cream_cheese.
+            - cream_cheese==1.0
 
         internal-dependencies:
             # Other packages may use other versions of lox.
             - lox==1.2
+
+Alternate package repositories
+------------------------------
 
 By default, ``bagel`` will fetch all of your dependencies from the central
 ``bagel`` package repository. However, packages can also specific other
