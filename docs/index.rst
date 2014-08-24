@@ -55,3 +55,4 @@ Language features
     features/classes
     features/interfaces
     features/enums
+    features/error-handling
