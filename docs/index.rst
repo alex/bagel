@@ -34,7 +34,7 @@ Bagel is:
 * Statically typed
 * Statically compiled
 * Garbage collected
-* Statically linked - The result of compilation is a single, isolated artifact.
+* Statically linked - The result of compilation is a single, isolated artifact
 * Concurrent and parallel
 * Type safe and memory safe
 * Fun to use
@@ -50,7 +50,7 @@ Bagel is designed for:
 Bagel is **not** designed for:
 
 * Interoperability with legacy programming languages
-* Being 100% as fast as possible, 95% is fine.
+* Being 100% as fast as possible, 95% is fine
 
 As a result, some of the features Bagel has are:
 
