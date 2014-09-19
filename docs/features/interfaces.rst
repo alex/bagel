@@ -37,16 +37,16 @@ To satisfy the interface, all we need to do is define a class with ``get`` and
 ``set`` methods with appropriate signatures::
 
     class InMemoryCache:
-        _data: Dict<Bytes, Bytes>
+        _data: Atom<Dict<Bytes, Bytes>>
 
         classdef new() -> CacheClient:
             return InMemoryCache(_data={})
 
         def get(self, key: Bytes) -> Option<Bytes>:
-            return self._data.get(key)
+            # ...
 
         def set(self, key: Bytes, value: Bytes):
-            self._data[key] = value
+            # ...
 
 We don't need to explicitly state that ``InMemoryCache`` implements
 ``CacheClient``, Bagel automatically knows this because it has the necessary
