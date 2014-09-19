@@ -1,6 +1,0 @@
-from std.io import StdIO
-
-
-def main(stdio: StdIO) -> ProgramResult:
-    stdio.out.write(b"Hello world!\n")
-    return ProgramResult.Success
