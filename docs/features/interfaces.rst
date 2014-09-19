@@ -37,11 +37,6 @@ To satisfy the interface, all we need to do is define a class with ``get`` and
 ``set`` methods with appropriate signatures::
 
     class InMemoryCache:
-        _data: Atom<Dict<Bytes, Bytes>>
-
-        classdef new() -> CacheClient:
-            return InMemoryCache(_data={})
-
         def get(self, key: Bytes) -> Option<Bytes>:
             # ...
 
