@@ -9,7 +9,7 @@ bagel program, the famous "Hello World" program::
 
     def main(stdio: StdIO) -> ProgramResult:
         stdio.out.write(b"Hello World\n")
-        return Success
+        return ProgramResult.Success
 
 If we save this to ``hello.bagel`` we can easily run it:
 
@@ -70,4 +70,5 @@ Language features
     features/classes
     features/interfaces
     features/enums
+    features/error-handling
     features/packaging

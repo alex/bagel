@@ -13,9 +13,9 @@ Then we can declare functions which take one of these values, and use
 
     def distance_unit(system: MeasuringSystem) -> Text:
         match system:
-            as Imperial:
+            as MeasuringSystem.Imperial:
                 return "Feet"
-            as Metric:
+            as MeasuringSystem.Metric:
                 return "Meters"
 
 The Bagel compiler will make sure that you handle all possible cases, so if you
@@ -33,9 +33,9 @@ Again, we can use pattern matching to handle these, also unpacking the values::
 
     def distance_in_inches(d: Distance) -> UInt:
         match d:
-            as Inches(x):
+            as Distance.Inches(x):
                 return x
-            as Feet(x):
+            as Distance.Feet(x):
                 return x * 12
 
 Enum values are immutable, after creating one, it's not possible to change any
@@ -52,9 +52,9 @@ contains another value, it can optionally be given a label::
 
     def talk_status_notice(status: TalkSubmissionStatus) -> Text:
         match status:
-            as Accepted:
+            as TalkSubmissionStatus.Accepted:
                 return "Your talk was accepted"
-            as InReview:
+            as TalkSubmissionStatus.InReview:
                 return "Your talk is still being reviewed"
-            as Rejected(reason):
+            as TalkSubmissionStatus.Rejected(reason):
                 return reason
