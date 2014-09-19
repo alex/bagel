@@ -12,7 +12,6 @@ Inspirations
 
 * Twisted
 
-  * Protocol/Transport separation
   * Endpoints
 
 * Golang
@@ -32,8 +31,9 @@ Inspirations
   * Pattern matching
   * Lightweight processes
   * Linking/crashing of processes
+  * "Assertion oriented" programming
 
 * Clojure
 
-  * Asynchronous HTTP APIs
+  * Persistent data structures
   * Channels
