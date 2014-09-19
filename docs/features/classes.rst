@@ -28,23 +28,11 @@ Then we can easily call these this method::
 
     new_p = p.translate(-1, -1, 0)
 
-All fields on a class are immutable, meaning code like::
+Fields on an object cannot be modified after it's created, meaning code like::
 
     p.x = 2
 
 Causes a compilation error.
-
-If we want fields in our ``Point`` to be mutable, we need to use ``Atom``,
-which is a type that's used to model mutability semantics::
-
-    class Point:
-        x: Atom<Int>
-        y: Atom<Int>
-
-Now we can do::
-
-    p = Point(x=1, y=2)
-    p.x.set(5)
 
 If you want your class to have a constructor other than the default one, you
 can achieve this by adding a class method::
