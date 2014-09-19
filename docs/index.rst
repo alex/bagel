@@ -11,6 +11,21 @@ bagel program, the famous "Hello World" program::
         stdio.out.write(b"Hello World\n")
         return ProgramResult.Success
 
+If we save this to ``hello.bagel`` we can easily run it:
+
+.. code-block:: console
+
+    $ bagel run hello.bagel
+    Hello World
+
+We can also build an executable:
+
+.. code-block:: console
+
+    $ bagel build hello.bagel
+    $ ./hello
+    Hello World
+
 Design goals
 ------------
 
@@ -56,3 +71,4 @@ Language features
     features/interfaces
     features/enums
     features/error-handling
+    features/packaging
