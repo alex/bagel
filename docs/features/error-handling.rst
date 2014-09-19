@@ -1,7 +1,7 @@
 Error Handling
 ==============
 
-Bagel's error handling is based around two seperate concepts:
+Bagel's error handling is based around two separate concepts:
 
 1. The ``Option`` and ``Result`` types.
 2. Task failure.
