@@ -28,21 +28,11 @@ Then we can easily call these this method::
 
     new_p = p.translate(-1, -1, 0)
 
-By default, all fields on a class are immutable, meaning code like::
+Fields on an object cannot be modified after it's created, meaning code like::
 
     p.x = 2
 
-Causes a compilation error. If we want to create a mutable ``Point``, we can
-add the ``mutable`` keyword to the field definitions::
-
-    class Point:
-        mutable x: Int
-        mutable y: Int
-
-Now we can do::
-
-    p = Point(x=1, y=2)
-    p.x = 5
+Causes a compilation error.
 
 If you want your class to have a constructor other than the default one, you
 can achieve this by adding a class method::

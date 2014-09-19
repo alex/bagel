@@ -60,6 +60,7 @@ As a result, some of the features Bagel has are:
 * Compile time reflection and metaprogramming
 * Powerful testing tools
 * Local type inference
+* Persistent data structures
 
 Language features
 -----------------
