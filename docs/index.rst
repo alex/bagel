@@ -72,4 +72,5 @@ Language features
     features/interfaces
     features/enums
     features/error-handling
+    features/persistent-datastructures
     features/packaging
