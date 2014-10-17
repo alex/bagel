@@ -85,14 +85,14 @@ class TestLexer(object):
         class Foo:
             a: Int
         """, [
-           Token("CLASS", "class"),
-           Token("NAME", "Foo"),
-           Token("COLON", ":"),
-           Token("NEWLINE", "\n"),
-           Token("INDENT", "    "),
-           Token("NAME", "a"),
-           Token("COLON", ":"),
-           Token("NAME", "Int"),
-           Token("NEWLINE", "\n"),
-           Token("DEDENT", ""),
+            Token("CLASS", "class"),
+            Token("NAME", "Foo"),
+            Token("COLON", ":"),
+            Token("NEWLINE", "\n"),
+            Token("INDENT", "    "),
+            Token("NAME", "a"),
+            Token("COLON", ":"),
+            Token("NAME", "Int"),
+            Token("NEWLINE", "\n"),
+            Token("DEDENT", ""),
         ])
