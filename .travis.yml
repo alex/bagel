@@ -1,0 +1,17 @@
+language: python
+env:
+    matrix:
+        - TOX_ENV=py27
+        - TOX_ENV=pypy
+        - TOX_ENV=pep8
+        - TOX_ENV=docs
+
+notifications:
+    irc:
+        channels: "irc.freenode.org##alex_gaynor"
+        use_notice: true
+        skip_join: true
+
+install: pip install tox
+
+script: tox -e $TOX_ENV
