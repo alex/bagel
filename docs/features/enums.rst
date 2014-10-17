@@ -9,7 +9,7 @@ values a variable can contain::
         Metric
 
 Then we can declare functions which take one of these values, and use
-:term:`pattern matching` to handle them::
+pattern matching to handle them::
 
     def distance_unit(system: MeasuringSystem) -> Text:
         match system:

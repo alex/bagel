@@ -1,0 +1,23 @@
+language: python
+env:
+    matrix:
+        - TOX_ENV=py27
+        - TOX_ENV=pypy
+        - TOX_ENV=pep8
+        - TOX_ENV=docs
+
+notifications:
+    irc:
+        channels: "irc.freenode.org##alex_gaynor"
+        use_notice: true
+        skip_join: true
+
+install:
+    - pip install tox
+    - |
+        if [[ "${TOX_ENV}" == 'docs' ]]; then
+            sudo apt-get -y update
+            sudo apt-get install libenchant-dev
+        fi
+
+script: tox -e $TOX_ENV
