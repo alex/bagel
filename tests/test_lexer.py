@@ -82,10 +82,11 @@ class TestLexer(object):
 
     def test_class(self):
         assert_lexes("""
-        class Foo:
+        class type Foo:
             a: Int
         """, [
             Token("CLASS", "class"),
+            Token("TYPE", "type"),
             Token("NAME", "Foo"),
             Token("COLON", ":"),
             Token("NEWLINE", "\n"),
@@ -99,12 +100,12 @@ class TestLexer(object):
 
     def test_enum(self):
         assert_lexes("""
-        enum class Foo:
+        enum type Foo:
             Bar
             Baz(Int, Int)
         """, [
             Token("ENUM", "enum"),
-            Token("CLASS", "class"),
+            Token("TYPE", "type"),
             Token("NAME", "Foo"),
             Token("COLON", ":"),
             Token("NEWLINE", "\n"),

@@ -25,7 +25,7 @@ Bagel forces you to handle the ``None`` cases. ``Result`` is similar to
 ``Option``, except it includes a failure value. A common pattern is to define
 an enum which includes possible error conditions::
 
-    enum class EmailValidationError:
+    enum type EmailValidationError:
         MissingHostname
         MissingMXRecord
         # Some email providers, such as gmail, have a minimum length for the
