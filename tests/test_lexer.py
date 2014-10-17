@@ -96,3 +96,27 @@ class TestLexer(object):
             Token("NEWLINE", "\n"),
             Token("DEDENT", ""),
         ])
+
+    def test_enum(self):
+        assert_lexes("""
+        enum class Foo:
+            Bar
+            Baz(Int, Int)
+        """, [
+            Token("ENUM", "enum"),
+            Token("CLASS", "class"),
+            Token("NAME", "Foo"),
+            Token("COLON", ":"),
+            Token("NEWLINE", "\n"),
+            Token("INDENT", "    "),
+            Token("NAME", "Bar"),
+            Token("NEWLINE", "\n"),
+            Token("NAME", "Baz"),
+            Token("LPAREN", "("),
+            Token("NAME", "Int"),
+            Token("COMMA", ","),
+            Token("NAME", "Int"),
+            Token("RPAREN", ")"),
+            Token("NEWLINE", "\n"),
+            Token("DEDENT", ""),
+        ])
