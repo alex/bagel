@@ -4,10 +4,11 @@ from rply.token import Token
 
 class Lexer(object):
     _lg = LexerGenerator()
-    _lg.add("DEF", r"def"),
+    _lg.add("DEF", r"def")
+    _lg.add("TYPE", r"type")
     _lg.add("CLASS", r"class")
     _lg.add("ENUM", r"enum")
-    _lg.add("MATCH", r"match"),
+    _lg.add("MATCH", r"match")
     _lg.add("AS", r"as"),
     _lg.add("LPAREN", r"\(")
     _lg.add("RPAREN", r"\)")

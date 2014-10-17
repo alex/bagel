@@ -5,7 +5,7 @@ Bagel is an object-oriented programming language, in the sense that you can
 define classes and associate data and functions with them. However, unlike many
 other object-oriented languages, in Bagel there is no inheritance::
 
-    class Point:
+    class type Point:
         x: Int
         y: Int
         z: Int
@@ -18,7 +18,7 @@ public constructor, so we can easily create a point instance::
 
 We can define methods on our ``Point`` class::
 
-    class Point:
+    class type Point:
         # ...
 
         def translate(self, dx: Int, dy: Int, dz: Int) -> Point:
@@ -37,7 +37,7 @@ Causes a compilation error.
 If you want your class to have a constructor other than the default one, you
 can achieve this by adding a class method::
 
-    class Point:
+    class type Point:
         x: Int
         y: Int
         z: Int

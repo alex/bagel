@@ -4,7 +4,7 @@ Enums
 Like many other languages, enums in Bagel let you specify several different
 values a variable can contain::
 
-    enum class MeasuringSystem:
+    enum type MeasuringSystem:
         Imperial
         Metric
 
@@ -25,7 +25,7 @@ unhandled case.
 
 Unlike many programming languages, Bagel's enums can contain other values::
 
-    enum class Distance:
+    enum type Distance:
         Inches(UInt)
         Feet(UInt)
 
@@ -44,7 +44,7 @@ of the values inside of it.
 You can make use of both of these features in a single enum. When an enum
 contains another value, it can optionally be given a label::
 
-    enum class TalkSubmissionStatus:
+    enum type TalkSubmissionStatus:
         Accepted
         InReview
         Rejected(reason: Text)
