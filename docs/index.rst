@@ -41,7 +41,7 @@ Bagel is:
 
 Bagel is designed for:
 
-* Readability above writeability
+* Readability above writability
 * Encouraging testable programs
 * Primarily writing network services
 * Performance

@@ -1,12 +1,12 @@
 Persistent Data Structures
 ==========================
 
-Bagel includes several collection data types, which are homogenous groupings of
-multiple other values. All of Bagel's builtin collections are
+Bagel includes several collection data types, which are homogeneous groupings
+of multiple other values. All of Bagel's built-in collections are
 :term:`persistent`, which means their contents can't be changed, but they do
 have operations for getting a copy of themselves some changes.
 
-The simplest of Bagel's datastructures is the ``List``, they have a builtin
+The simplest of Bagel's data structures is the ``List``, they have a built-in
 syntax for creation::
 
     l = [1, 2, 3, 4]

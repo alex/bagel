@@ -2,8 +2,8 @@ Classes
 =======
 
 Bagel is an object-oriented programming language, in the sense that you can
-define classes and assosciate data and functions with them. However, unlike
-many other object-oriented languages, in Bagel there is no inheritance::
+define classes and associate data and functions with them. However, unlike many
+other object-oriented languages, in Bagel there is no inheritance::
 
     class Point:
         x: Int

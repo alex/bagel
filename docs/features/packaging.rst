@@ -50,7 +50,7 @@ You can also install packages from a version control system:
 Internal Dependencies
 ---------------------
 
-One common issue that arises with packging is multiple dependencies, which
+One common issue that arises with packaging is multiple dependencies, which
 require different versions of the same package. To solve this, Bagel allows a
 package to define internal dependencies. A package's internal dependencies are
 allowed to have version conflicts with other package's dependencies. The only
