@@ -52,3 +52,30 @@ class TestLexer(object):
             Token("NEWLINE", "\n"),
             Token("DEDENT", ""),
         ])
+
+    def test_multi_level_indent_dedent(self):
+        assert_lexes("""
+        def f():
+            def g():
+                return 3
+        """, [
+            Token("DEF", "def"),
+            Token("NAME", "f"),
+            Token("LPAREN", "("),
+            Token("RPAREN", ")"),
+            Token("COLON", ":"),
+            Token("NEWLINE", "\n"),
+            Token("INDENT", "    "),
+            Token("DEF", "def"),
+            Token("NAME", "g"),
+            Token("LPAREN", "("),
+            Token("RPAREN", ")"),
+            Token("COLON", ":"),
+            Token("NEWLINE", "\n"),
+            Token("INDENT", "    "),
+            Token("RETURN", "return"),
+            Token("INTEGER", "3"),
+            Token("NEWLINE", "\n"),
+            Token("DEDENT", ""),
+            Token("DEDENT", ""),
+        ])
