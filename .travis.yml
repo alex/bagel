@@ -8,7 +8,7 @@ env:
 
 notifications:
     irc:
-        channels: "irc.freenode.org##alex_gaynor"
+        channels: "irc.freenode.org#%23alex_gaynor"
         use_notice: true
         skip_join: true
 
