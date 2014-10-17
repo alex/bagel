@@ -6,9 +6,11 @@ class Lexer(object):
     _lg = LexerGenerator()
     _lg.add("DEF", r"def"),
     _lg.add("CLASS", r"class")
+    _lg.add("ENUM", r"enum")
     _lg.add("LPAREN", r"\(")
     _lg.add("RPAREN", r"\)")
     _lg.add("COLON", r":")
+    _lg.add("COMMA", r",")
     _lg.add("RETURN", r"return")
     _lg.add("INTEGER", r"\d+")
     _lg.add("NEWLINE_WITH_SPACES", r"\n(    )*")
