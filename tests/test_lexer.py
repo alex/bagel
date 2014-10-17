@@ -79,3 +79,20 @@ class TestLexer(object):
             Token("DEDENT", ""),
             Token("DEDENT", ""),
         ])
+
+    def test_class(self):
+        assert_lexes("""
+        class Foo:
+            a: Int
+        """, [
+           Token("CLASS", "class"),
+           Token("NAME", "Foo"),
+           Token("COLON", ":"),
+           Token("NEWLINE", "\n"),
+           Token("INDENT", "    "),
+           Token("NAME", "a"),
+           Token("COLON", ":"),
+           Token("NAME", "Int"),
+           Token("NEWLINE", "\n"),
+           Token("DEDENT", ""),
+        ])

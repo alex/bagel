@@ -5,6 +5,7 @@ from rply.token import Token
 class Lexer(object):
     _lg = LexerGenerator()
     _lg.add("DEF", r"def"),
+    _lg.add("CLASS", r"class")
     _lg.add("LPAREN", r"\(")
     _lg.add("RPAREN", r"\)")
     _lg.add("COLON", r":")
