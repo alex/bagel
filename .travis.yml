@@ -6,6 +6,10 @@ env:
         - TOX_ENV=pep8
         - TOX_ENV=docs
 
+branches:
+    only:
+        - master
+
 notifications:
     irc:
         channels: "irc.freenode.org#%23alex_gaynor"
