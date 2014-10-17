@@ -140,3 +140,35 @@ class TestLexer(object):
             Token("NEWLINE", "\n"),
             Token("DEDENT", ""),
         ])
+
+    def test_match_statement(self):
+        assert_lexes("""
+        def f():
+            match 3:
+                as n:
+                    return n
+        """, [
+            Token("DEF", "def"),
+            Token("NAME", "f"),
+            Token("LPAREN", "("),
+            Token("RPAREN", ")"),
+            Token("COLON", ":"),
+            Token("NEWLINE", "\n"),
+            Token("INDENT", "    "),
+            Token("MATCH", "match"),
+            Token("INTEGER", "3"),
+            Token("COLON", ":"),
+            Token("NEWLINE", "\n"),
+            Token("INDENT", "    "),
+            Token("AS", "as"),
+            Token("NAME", "n"),
+            Token("COLON", ":"),
+            Token("NEWLINE", "\n"),
+            Token("INDENT", "    "),
+            Token("RETURN", "return"),
+            Token("NAME", "n"),
+            Token("NEWLINE", "\n"),
+            Token("DEDENT", ""),
+            Token("DEDENT", ""),
+            Token("DEDENT", ""),
+        ])
