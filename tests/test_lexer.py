@@ -120,3 +120,23 @@ class TestLexer(object):
             Token("NEWLINE", "\n"),
             Token("DEDENT", ""),
         ])
+
+    def test_function_return_type(self):
+        assert_lexes("""
+        def f() -> Int:
+            return 3
+        """, [
+            Token("DEF", "def"),
+            Token("NAME", "f"),
+            Token("LPAREN", "("),
+            Token("RPAREN", ")"),
+            Token("ARROW", "->"),
+            Token("NAME", "Int"),
+            Token("COLON", ":"),
+            Token("NEWLINE", "\n"),
+            Token("INDENT", "    "),
+            Token("RETURN", "return"),
+            Token("INTEGER", "3"),
+            Token("NEWLINE", "\n"),
+            Token("DEDENT", ""),
+        ])

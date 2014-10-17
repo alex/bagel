@@ -11,6 +11,7 @@ class Lexer(object):
     _lg.add("RPAREN", r"\)")
     _lg.add("COLON", r":")
     _lg.add("COMMA", r",")
+    _lg.add("ARROW", r"->")
     _lg.add("RETURN", r"return")
     _lg.add("INTEGER", r"\d+")
     _lg.add("NEWLINE_WITH_SPACES", r"\n(    )*")
