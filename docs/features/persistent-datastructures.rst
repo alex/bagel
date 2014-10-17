@@ -1,8 +1,8 @@
 Persistent Data Structures
 ==========================
 
-Bagel includes several :term:`collection` data types, which are homogenous
-groupings of multiple other values. All of Bagel's builtin collections are
+Bagel includes several collection data types, which are homogenous groupings of
+multiple other values. All of Bagel's builtin collections are
 :term:`persistent`, which means their contents can't be changed, but they do
 have operations for getting a copy of themselves some changes.
 

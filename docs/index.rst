@@ -74,3 +74,10 @@ Language features
     features/error-handling
     features/persistent-datastructures
     features/packaging
+
+Other
+-----
+
+.. toctree::
+
+    glossary
