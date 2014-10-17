@@ -14,6 +14,10 @@ notifications:
 
 install:
     - pip install tox
-    - "[[ \"${TOX_ENV}\" == 'docs' ]] && sudo apt-get -y update && sudo apt-get install libenchant-dev"
+    - |
+        if [[ "${TOX_ENV}" == 'docs' ]]; then
+            sudo apt-get -y update
+            sudo apt-get install libenchant-dev
+        fi
 
 script: tox -e $TOX_ENV
