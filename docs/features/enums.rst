@@ -5,8 +5,11 @@ Like many other languages, enums in Bagel let you specify several different
 values a variable can contain::
 
     enum type MeasuringSystem:
-        Imperial
-        Metric
+        case Imperial
+        case Metric
+
+We use the ``case`` keyword to indicate each possible value an ``enum`` can
+contain.
 
 Then we can declare functions which take one of these values, and use
 pattern matching to handle them::
@@ -26,8 +29,8 @@ unhandled case.
 Unlike many programming languages, Bagel's enums can contain other values::
 
     enum type Distance:
-        Inches(UInt)
-        Feet(UInt)
+        case Inches(UInt)
+        case Feet(UInt)
 
 Again, we can use pattern matching to handle these, also unpacking the values::
 
@@ -45,9 +48,9 @@ You can make use of both of these features in a single enum. When an enum
 contains another value, it can optionally be given a label::
 
     enum type TalkSubmissionStatus:
-        Accepted
-        InReview
-        Rejected(reason: Text)
+        case Accepted
+        case InReview
+        case Rejected(reason: Text)
 
 
     def talk_status_notice(status: TalkSubmissionStatus) -> Text:
