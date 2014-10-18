@@ -11,16 +11,22 @@ class Lexer(object):
     _lg.add("MATCH", r"match")
     _lg.add("AS", r"as"),
     _lg.add("CASE", r"case")
+    _lg.add("RETURN", r"return")
+
     _lg.add("LPAREN", r"\(")
     _lg.add("RPAREN", r"\)")
+
     _lg.add("COLON", r":")
     _lg.add("COMMA", r",")
     _lg.add("ARROW", r"->")
-    _lg.add("RETURN", r"return")
+
     _lg.add("INTEGER", r"\d+")
+
     _lg.add("NEWLINE_WITH_SPACES", r"\n(    )*")
+
     _lg.add("NAME", r"[a-zA-Z]+")
-    _lg.ignore(" ")
+
+    _lg.ignore(r" ")
 
     _lexer = _lg.build()
 
