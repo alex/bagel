@@ -10,6 +10,7 @@ class Lexer(object):
     _lg.add("ENUM", r"enum")
     _lg.add("MATCH", r"match")
     _lg.add("AS", r"as"),
+    _lg.add("CASE", r"case")
     _lg.add("LPAREN", r"\(")
     _lg.add("RPAREN", r"\)")
     _lg.add("COLON", r":")

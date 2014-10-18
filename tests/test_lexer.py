@@ -101,8 +101,8 @@ class TestLexer(object):
     def test_enum(self):
         assert_lexes("""
         enum type Foo:
-            Bar
-            Baz(Int, Int)
+            case Bar
+            case Baz(Int, Int)
         """, [
             Token("ENUM", "enum"),
             Token("TYPE", "type"),
@@ -110,8 +110,10 @@ class TestLexer(object):
             Token("COLON", ":"),
             Token("NEWLINE", "\n"),
             Token("INDENT", "    "),
+            Token("CASE", "case"),
             Token("NAME", "Bar"),
             Token("NEWLINE", "\n"),
+            Token("CASE", "case"),
             Token("NAME", "Baz"),
             Token("LPAREN", "("),
             Token("NAME", "Int"),
