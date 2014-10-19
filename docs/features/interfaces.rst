@@ -13,7 +13,7 @@ Bagel doesn't have subclassing.
 First, we write our interface::
 
     interface type CacheClient:
-        def get(self, key: Bytes) -> Option<Bytes>
+        def get(self, key: Bytes) -> Option[Bytes]
         def set(self, key: Bytes, value: Bytes)
 
 This says that to implement the ``CacheClient`` interface, a class must define
@@ -37,7 +37,7 @@ To satisfy the interface, all we need to do is define a class with ``get`` and
 ``set`` methods with appropriate signatures::
 
     class type InMemoryCache:
-        def get(self, key: Bytes) -> Option<Bytes>:
+        def get(self, key: Bytes) -> Option[Bytes]:
             # ...
 
         def set(self, key: Bytes, value: Bytes):
