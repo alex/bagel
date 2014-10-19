@@ -14,7 +14,7 @@ Whereas in many programming languages, such as Java, any value can be a
 ``Option`` type, which is a way of specifying that there may be either a value,
 or ``None``::
 
-    def f(x: Option<Text>) -> Text:
+    def f(x: Option[Text]) -> Text:
         match as:
             as Some(value):
                 return value
