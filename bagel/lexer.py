@@ -19,6 +19,7 @@ class Lexer(object):
     _lg.add("COLON", r":")
     _lg.add("COMMA", r",")
     _lg.add("ARROW", r"->")
+    _lg.add("EQUAL", r"=")
 
     _lg.add("INTEGER", r"\d+")
 
