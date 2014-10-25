@@ -36,7 +36,7 @@ automatically fetch the ``cream_cheese`` and ``lox`` packages from the central
 
 Now your code will be able to import things from these libraries::
 
-    from cream_cheese import Schmear
+    import cream_cheese.Schmear
 
 You can also install packages from a version control system:
 
