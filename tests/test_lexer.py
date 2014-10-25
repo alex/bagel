@@ -175,3 +175,22 @@ class TestLexer(object):
             Token("DEDENT", ""),
             Token("DEDENT", ""),
         ])
+
+    def test_assignment(self):
+        assert_lexes("""
+        def f():
+            a = 2
+        """, [
+            Token("DEF", "def"),
+            Token("NAME", "f"),
+            Token("LPAREN", "("),
+            Token("RPAREN", ")"),
+            Token("COLON", ":"),
+            Token("NEWLINE", "\n"),
+            Token("INDENT", "    "),
+            Token("NAME", "a"),
+            Token("EQUAL", "="),
+            Token("INTEGER", "2"),
+            Token("NEWLINE", "\n"),
+            Token("DEDENT", ""),
+        ])
