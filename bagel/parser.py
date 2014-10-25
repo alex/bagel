@@ -36,7 +36,8 @@ class Parser(object):
     def module_decleration(self, p):
         return p[0]
 
-    @_pg.production("function : DEF NAME LPAREN RPAREN COLON NEWLINE INDENT suite DEDENT")
+    @_pg.production("function : DEF NAME LPAREN RPAREN COLON NEWLINE INDENT "
+                    "           suite DEDENT")
     def module_function(self, p):
         return ast.Function(
             p[1].getstr(), [], None, p[7],
