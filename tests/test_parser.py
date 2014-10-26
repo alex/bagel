@@ -20,3 +20,13 @@ class TestParser(object):
                 ast.Return(ast.Integer(3)),
             ]))
         ]))
+
+    def test_simple_class(self):
+        assert_parses("""
+        class type Foo:
+            a: Int
+        """, ast.Module([
+            ast.Class("Foo", [
+                ast.Attribute("a", ast.Name("Int")),
+            ])
+        ]))

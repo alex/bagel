@@ -6,6 +6,27 @@ class Module(object):
         return self._declarations == other._declarations
 
 
+class Class(object):
+    def __init__(self, name, declarations):
+        self._name = name
+        self._declarations = declarations
+
+    def __eq__(self, other):
+        return (
+            self._name == other._name and
+            self._declarations == other._declarations
+        )
+
+
+class Attribute(object):
+    def __init__(self, name, tp):
+        self._name = name
+        self._tp = tp
+
+    def __eq__(self, other):
+        return self._name == other._name and self._tp == other._tp
+
+
 class Function(object):
     def __init__(self, name, arguments, return_type, body):
         self._name = name
@@ -36,6 +57,14 @@ class Suite(object):
 
     def __eq__(self, other):
         return self._body == other._body
+
+
+class Name(object):
+    def __init__(self, value):
+        self._value = value
+
+    def __eq__(self, other):
+        return self._value == other._value
 
 
 class Integer(object):
