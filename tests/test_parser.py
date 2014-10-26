@@ -30,3 +30,11 @@ class TestParser(object):
                 ast.Attribute("a", ast.Name("Int")),
             ])
         ]))
+
+    def test_enum(self):
+        assert_parses("""
+        enum type Foo:
+            case Bar
+        """, ast.Module([
+            ast.Enum("Foo", [ast.EnumCase("Bar")])
+        ]))
