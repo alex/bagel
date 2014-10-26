@@ -65,12 +65,17 @@ class Parser(object):
     def case_name(self, p):
         return ast.EnumCase(p[1].getstr())
 
-    @_pg.production("case : CASE NAME LPAREN NAME COMMA NAME RPAREN NEWLINE")
+    @_pg.production("case : CASE NAME LPAREN case_members RPAREN NEWLINE")
     def case_call(self, p):
-        return ast.EnumCase(p[1].getstr(), [
-            ast.Name(p[3].getstr()),
-            ast.Name(p[5].getstr())
-        ])
+        return ast.EnumCase(p[1].getstr(), p[3])
+
+    @_pg.production("case_members : expression")
+    def case_members_case_member(self, p):
+        return [p[0]]
+
+    @_pg.production("case_members : case_members COMMA expression")
+    def case_members_case_members(self, p):
+        return p[0] + [p[2]]
 
     @_pg.production("suite : statements")
     def suite_statements(self, p):
