@@ -28,12 +28,12 @@ class Parser(object):
     def declarations_none(self, p):
         return []
 
-    @_pg.production("declarations : declarations decleration")
-    def declarations_declarations_decleration(self, p):
+    @_pg.production("declarations : declarations declaration")
+    def declarations_declarations_declaration(self, p):
         return p[0] + [p[1]]
 
-    @_pg.production("decleration : function")
-    def module_decleration(self, p):
+    @_pg.production("declaration : function")
+    def module_declaration(self, p):
         return p[0]
 
     @_pg.production("function : DEF NAME LPAREN RPAREN COLON NEWLINE INDENT "
