@@ -28,11 +28,12 @@ class Enum(object):
 
 
 class EnumCase(object):
-    def __init__(self, name):
+    def __init__(self, name, members=None):
         self._name = name
+        self._members = members
 
     def __eq__(self, other):
-        return self._name == other._name
+        return self._name == other._name and self._members == other._members
 
 
 class Attribute(object):

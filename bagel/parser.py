@@ -7,7 +7,7 @@ class Parser(object):
     _pg = ParserGenerator([
         "NEWLINE", "INDENT", "DEDENT",
 
-        "COLON",
+        "COLON", "COMMA",
 
         "LPAREN", "RPAREN",
 
@@ -62,8 +62,12 @@ class Parser(object):
         return ast.Attribute(p[0].getstr(), p[2])
 
     @_pg.production("case : CASE NAME NEWLINE")
-    def case(self, p):
+    def case_name(self, p):
         return ast.EnumCase(p[1].getstr())
+
+    @_pg.production("case : CASE NAME LPAREN NAME COMMA NAME RPAREN NEWLINE")
+    def case_call(self, p):
+        return ast.EnumCase(p[1].getstr(), [ast.Name(p[3].getstr()), ast.Name(p[5].getstr())])
 
     @_pg.production("suite : statements")
     def suite_statements(self, p):

@@ -35,6 +35,10 @@ class TestParser(object):
         assert_parses("""
         enum type Foo:
             case Bar
+            case Baz(Int, Int)
         """, ast.Module([
-            ast.Enum("Foo", [ast.EnumCase("Bar")])
+            ast.Enum("Foo", [
+                ast.EnumCase("Bar"),
+                ast.EnumCase("Baz", [ast.Name("Int"), ast.Name("Int")])
+            ])
         ]))
