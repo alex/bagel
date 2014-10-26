@@ -20,16 +20,16 @@ class Parser(object):
     def program_module(self, p):
         return p[0]
 
-    @_pg.production("module : declerations")
-    def module_declerations(self, p):
+    @_pg.production("module : declarations")
+    def module_declarations(self, p):
         return ast.Module(p[0])
 
-    @_pg.production("declerations : none")
-    def declerations_none(self, p):
+    @_pg.production("declarations : none")
+    def declarations_none(self, p):
         return []
 
-    @_pg.production("declerations : declerations decleration")
-    def declerations_declerations_decleration(self, p):
+    @_pg.production("declarations : declarations decleration")
+    def declarations_declarations_decleration(self, p):
         return p[0] + [p[1]]
 
     @_pg.production("decleration : function")

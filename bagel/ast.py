@@ -1,9 +1,9 @@
 class Module(object):
-    def __init__(self, declerations):
-        self._declerations = declerations
+    def __init__(self, declarations):
+        self._declarations = declarations
 
     def __eq__(self, other):
-        return self._declerations == other._declerations
+        return self._declarations == other._declarations
 
 
 class Function(object):
