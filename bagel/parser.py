@@ -11,7 +11,7 @@ class Parser(object):
 
         "LPAREN", "RPAREN",
 
-        "DEF", "RETURN",
+        "CLASS", "DEF", "RETURN", "TYPE",
 
         "NAME", "INTEGER",
     ])
@@ -33,15 +33,25 @@ class Parser(object):
         return p[0] + [p[1]]
 
     @_pg.production("declaration : function")
-    def module_declaration(self, p):
+    @_pg.production("declaration : class")
+    @_pg.production("declaration : attribute")
+    def declaration(self, p):
         return p[0]
 
     @_pg.production("function : DEF NAME LPAREN RPAREN COLON NEWLINE INDENT "
                     "           suite DEDENT")
-    def module_function(self, p):
+    def function(self, p):
         return ast.Function(
             p[1].getstr(), [], None, p[7],
         )
+
+    @_pg.production("class : CLASS TYPE NAME COLON NEWLINE INDENT declarations DEDENT")
+    def class_(self, p):
+        return ast.Class(p[2].getstr(), p[6])
+
+    @_pg.production("attribute : NAME COLON expression NEWLINE")
+    def attribute(self, p):
+        return ast.Attribute(p[0].getstr(), p[2])
 
     @_pg.production("suite : statements")
     def suite_statements(self, p):
@@ -62,6 +72,10 @@ class Parser(object):
     @_pg.production("expression : INTEGER")
     def expression_integer(self, p):
         return ast.Integer(int(p[0].getstr()))
+
+    @_pg.production("expression : NAME")
+    def expression_name(self, p):
+        return ast.Name(p[0].getstr())
 
     @_pg.production("none : ")
     def none(self, p):
