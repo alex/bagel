@@ -2,8 +2,8 @@ class Module(object):
     def __init__(self, declarations):
         self._declarations = declarations
 
-    def __eq__(self, other):
-        return self._declarations == other._declarations
+    def visit(self, visitor, arg):
+        return visitor.visit_module(self, arg)
 
 
 class Class(object):
@@ -11,11 +11,8 @@ class Class(object):
         self._name = name
         self._declarations = declarations
 
-    def __eq__(self, other):
-        return (
-            self._name == other._name and
-            self._declarations == other._declarations
-        )
+    def visit(self, visitor, arg):
+        return visitor.visit_class(self, arg)
 
 
 class Enum(object):
@@ -23,8 +20,8 @@ class Enum(object):
         self._name = name
         self._cases = cases
 
-    def __eq__(self, other):
-        return self._name == other._name and self._cases == other._cases
+    def visit(self, visitor, arg):
+        return visitor.visit_enum(self, arg)
 
 
 class EnumCase(object):
@@ -32,8 +29,8 @@ class EnumCase(object):
         self._name = name
         self._members = members
 
-    def __eq__(self, other):
-        return self._name == other._name and self._members == other._members
+    def visit(self, visitor, arg):
+        return visitor.visit_enum_case(self, arg)
 
 
 class Attribute(object):
@@ -41,8 +38,8 @@ class Attribute(object):
         self._name = name
         self._tp = tp
 
-    def __eq__(self, other):
-        return self._name == other._name and self._tp == other._tp
+    def visit(self, visitor, arg):
+        return visitor.visit_attribute(self, arg)
 
 
 class Function(object):
@@ -52,42 +49,37 @@ class Function(object):
         self._return_type = return_type
         self._body = body
 
-    def __eq__(self, other):
-        return (
-            self._name == other._name and
-            self._arguments == other._arguments and
-            self._return_type == other._return_type and
-            self._body == other._body
-        )
+    def visit(self, visitor, arg):
+        return visitor.visit_function(self, arg)
 
 
 class Return(object):
     def __init__(self, value):
         self._value = value
 
-    def __eq__(self, other):
-        return self._value == other._value
+    def visit(self, visitor, arg):
+        return visitor.visit_return(self, arg)
 
 
 class Suite(object):
     def __init__(self, body):
         self._body = body
 
-    def __eq__(self, other):
-        return self._body == other._body
+    def visit(self, visitor, arg):
+        return visitor.visit_suite(self, arg)
 
 
 class Name(object):
     def __init__(self, value):
         self._value = value
 
-    def __eq__(self, other):
-        return self._value == other._value
+    def visit(self, visitor, arg):
+        return visitor.visit_name(self, arg)
 
 
 class Integer(object):
     def __init__(self, value):
         self._value = value
 
-    def __eq__(self, other):
-        return self._value == other._value
+    def visit(self, visitor, arg):
+        return visitor.visit_integer(self, arg)
