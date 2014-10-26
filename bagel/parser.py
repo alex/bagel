@@ -45,7 +45,8 @@ class Parser(object):
             p[1].getstr(), [], None, p[7],
         )
 
-    @_pg.production("class : CLASS TYPE NAME COLON NEWLINE INDENT declarations DEDENT")
+    @_pg.production("class : CLASS TYPE NAME COLON NEWLINE INDENT declarations"
+                    "        DEDENT")
     def class_(self, p):
         return ast.Class(p[2].getstr(), p[6])
 
