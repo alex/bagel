@@ -11,7 +11,7 @@ class Parser(object):
 
         "LPAREN", "RPAREN",
 
-        "CLASS", "DEF", "RETURN", "TYPE",
+        "CASE", "CLASS", "DEF", "ENUM", "RETURN", "TYPE",
 
         "NAME", "INTEGER",
     ])
@@ -34,7 +34,9 @@ class Parser(object):
 
     @_pg.production("declaration : function")
     @_pg.production("declaration : class")
+    @_pg.production("declaration : enum")
     @_pg.production("declaration : attribute")
+    @_pg.production("declaration : case")
     def declaration(self, p):
         return p[0]
 
@@ -50,9 +52,18 @@ class Parser(object):
     def class_(self, p):
         return ast.Class(p[2].getstr(), p[6])
 
+    @_pg.production("enum : ENUM TYPE NAME COLON NEWLINE INDENT declarations "
+                    "       DEDENT")
+    def enum(self, p):
+        return ast.Enum(p[2].getstr(), p[6])
+
     @_pg.production("attribute : NAME COLON expression NEWLINE")
     def attribute(self, p):
         return ast.Attribute(p[0].getstr(), p[2])
+
+    @_pg.production("case : CASE NAME NEWLINE")
+    def case(self, p):
+        return ast.EnumCase(p[1].getstr())
 
     @_pg.production("suite : statements")
     def suite_statements(self, p):

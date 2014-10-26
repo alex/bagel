@@ -18,6 +18,23 @@ class Class(object):
         )
 
 
+class Enum(object):
+    def __init__(self, name, cases):
+        self._name = name
+        self._cases = cases
+
+    def __eq__(self, other):
+        return self._name == other._name and self._cases == other._cases
+
+
+class EnumCase(object):
+    def __init__(self, name):
+        self._name = name
+
+    def __eq__(self, other):
+        return self._name == other._name
+
+
 class Attribute(object):
     def __init__(self, name, tp):
         self._name = name
