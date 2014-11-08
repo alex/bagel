@@ -69,6 +69,24 @@ class Suite(object):
         return visitor.visit_suite(self, arg)
 
 
+class Match(object):
+    def __init__(self, condition, cases):
+        self._condition = condition
+        self._cases = cases
+
+    def visit(self, visitor, arg):
+        return visitor.visit_match(self, arg)
+
+
+class MatchCase(object):
+    def __init__(self, matcher, body):
+        self._matcher = matcher
+        self._body = body
+
+    def visit(self, visitor, arg):
+        return visitor.visit_match_case(self, arg)
+
+
 class Name(object):
     def __init__(self, value):
         self._value = value
