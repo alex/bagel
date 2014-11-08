@@ -90,16 +90,22 @@ class Parser(object):
     def statements_statements_statement(self, p):
         return p[0] + [p[1]]
 
-    @_pg.production("statement : RETURN expression NEWLINE")
+    @_pg.production("statement : return")
+    @_pg.production("statement : assignment")
+    @_pg.production("statement : match")
+    def statement(self, p):
+        return p[0]
+
+    @_pg.production("return : RETURN expression NEWLINE")
     def statement_return_expression_newline(self, p):
         return ast.Return(p[1])
 
-    @_pg.production("statement : expression EQUAL expression NEWLINE")
-    def statement_expression_equal_expression(self, p):
+    @_pg.production("assignment : expression EQUAL expression NEWLINE")
+    def assignment_expression_equal_expression(self, p):
         return ast.Assignment(p[0], p[2])
 
-    @_pg.production("statement : MATCH expression COLON NEWLINE INDENT "
-                    "            match_case match_cases DEDENT")
+    @_pg.production("match : MATCH expression COLON NEWLINE INDENT "
+                    "        match_case match_cases DEDENT")
     def statement_match(self, p):
         return ast.Match(p[1], [p[5]] + p[6])
 
