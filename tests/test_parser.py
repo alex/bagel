@@ -29,6 +29,14 @@ class AssertEqualVisitor(object):
     def visit_return(self, node1, node2):
         self.visit(node1._value, node2._value)
 
+    def visit_match(self, node1, node2):
+        self.visit(node1._condition, node2._condition)
+        self._visit_list(node1._cases, node2._cases)
+
+    def visit_match_case(self, node1, node2):
+        self.visit(node1._matcher, node2._matcher)
+        self.visit(node1._body, node2._body)
+
     def visit_class(self, node1, node2):
         assert node1._name == node2._name
         self._visit_list(node1._declarations, node2._declarations)
@@ -90,4 +98,41 @@ class TestParser(object):
                 ast.EnumCase("Bar"),
                 ast.EnumCase("Baz", [ast.Name("Int"), ast.Name("Int")])
             ])
+        ]))
+
+    def test_match_statement(self):
+        assert_parses("""
+        def f():
+            match 3:
+                as n:
+                    return n
+        """, ast.Module([
+            ast.Function("f", [], None, ast.Suite([
+                ast.Match(ast.Integer(3), [
+                    ast.MatchCase(ast.Name("n"), ast.Suite([
+                        ast.Return(ast.Name("n"))
+                    ]))
+                ])
+            ]))
+        ]))
+
+    def test_match_multiple_cases(self):
+        assert_parses("""
+        def f():
+            match 3:
+                as 5:
+                    return 10
+                as n:
+                    return n
+        """, ast.Module([
+            ast.Function("f", [], None, ast.Suite([
+                ast.Match(ast.Integer(3), [
+                    ast.MatchCase(ast.Integer(5), ast.Suite([
+                        ast.Return(ast.Integer(10))
+                    ])),
+                    ast.MatchCase(ast.Name("n"), ast.Suite([
+                        ast.Return(ast.Name("n"))
+                    ]))
+                ])
+            ]))
         ]))
