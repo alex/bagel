@@ -29,6 +29,10 @@ class AssertEqualVisitor(object):
     def visit_return(self, node1, node2):
         self.visit(node1._value, node2._value)
 
+    def visit_assignment(self, node1, node2):
+        self.visit(node1._target, node2._target)
+        self.visit(node1._value, node2._value)
+
     def visit_match(self, node1, node2):
         self.visit(node1._condition, node2._condition)
         self._visit_list(node1._cases, node2._cases)
@@ -134,5 +138,15 @@ class TestParser(object):
                         ast.Return(ast.Name("n"))
                     ]))
                 ])
+            ]))
+        ]))
+
+    def test_assignment(self):
+        assert_parses("""
+        def f():
+            a = 2
+        """, ast.Module([
+            ast.Function("f", [], None, ast.Suite([
+                ast.Assignment(ast.Name("a"), ast.Integer(2))
             ]))
         ]))
