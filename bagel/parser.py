@@ -90,7 +90,6 @@ class Parser(object):
     def statements_statements_statement(self, p):
         return p[0] + [p[1]]
 
-
     @_pg.production("statement : return")
     @_pg.production("statement : assignment")
     @_pg.production("statement : match")
