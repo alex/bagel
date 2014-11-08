@@ -7,7 +7,7 @@ class Parser(object):
     _pg = ParserGenerator([
         "NEWLINE", "INDENT", "DEDENT",
 
-        "COLON", "COMMA",
+        "COLON", "COMMA", "EQUAL",
 
         "LPAREN", "RPAREN",
 
@@ -36,7 +36,7 @@ class Parser(object):
     @_pg.production("declaration : class")
     @_pg.production("declaration : enum")
     @_pg.production("declaration : attribute")
-    @_pg.production("declaration : case")
+    @_pg.production("declaration : enum_case")
     def declaration(self, p):
         return p[0]
 
@@ -61,19 +61,20 @@ class Parser(object):
     def attribute(self, p):
         return ast.Attribute(p[0].getstr(), p[2])
 
-    @_pg.production("case : CASE NAME NEWLINE")
+    @_pg.production("enum_case : CASE NAME NEWLINE")
     def case_name(self, p):
         return ast.EnumCase(p[1].getstr())
 
-    @_pg.production("case : CASE NAME LPAREN case_members RPAREN NEWLINE")
+    @_pg.production("enum_case : CASE NAME LPAREN enum_case_members RPAREN "
+                    "            NEWLINE")
     def case_call(self, p):
         return ast.EnumCase(p[1].getstr(), p[3])
 
-    @_pg.production("case_members : expression")
+    @_pg.production("enum_case_members : expression")
     def case_members_case_member(self, p):
         return [p[0]]
 
-    @_pg.production("case_members : case_members COMMA expression")
+    @_pg.production("enum_case_members : enum_case_members COMMA expression")
     def case_members_case_members(self, p):
         return p[0] + [p[2]]
 
@@ -92,6 +93,10 @@ class Parser(object):
     @_pg.production("statement : RETURN expression NEWLINE")
     def statement_return_expression_newline(self, p):
         return ast.Return(p[1])
+
+    @_pg.production("statement : expression EQUAL expression NEWLINE")
+    def statement_expression_equal_expression(self, p):
+        return ast.Assignment(p[0], p[2])
 
     @_pg.production("statement : MATCH expression COLON NEWLINE INDENT "
                     "            match_case match_cases DEDENT")

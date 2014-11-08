@@ -53,6 +53,14 @@ class Function(object):
         return visitor.visit_function(self, arg)
 
 
+class Suite(object):
+    def __init__(self, body):
+        self._body = body
+
+    def visit(self, visitor, arg):
+        return visitor.visit_suite(self, arg)
+
+
 class Return(object):
     def __init__(self, value):
         self._value = value
@@ -61,12 +69,13 @@ class Return(object):
         return visitor.visit_return(self, arg)
 
 
-class Suite(object):
-    def __init__(self, body):
-        self._body = body
+class Assignment(object):
+    def __init__(self, target, value):
+        self._target = target
+        self._value = value
 
     def visit(self, visitor, arg):
-        return visitor.visit_suite(self, arg)
+        return visitor.visit_assignment(self, arg)
 
 
 class Match(object):
