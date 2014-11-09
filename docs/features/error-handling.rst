@@ -15,10 +15,10 @@ Whereas in many programming languages, such as Java, any value can be a
 or ``None``::
 
     def f(x: Option[Text]) -> Text:
-        match as:
-            as Some(value):
+        match x:
+            with Some(value):
                 return value
-            as None:
+            with None:
                 return "Nothing to see here..."
 
 Bagel forces you to handle the ``None`` cases. ``Result`` is similar to
@@ -34,13 +34,13 @@ an enum which includes possible error conditions::
 
     def handle_email_address(email: Text) -> Text:
         match validate_address(email):
-            as Ok(address):
+            with Ok(address):
                 return "Ok: " + address
-            as Err(EmailValidationError.MissingHostname):
+            with Err(EmailValidationError.MissingHostname):
                 return "ERROR: There is no hostname"
-            as Err(EmailValidationError.MissingMXRecord):
+            with Err(EmailValidationError.MissingMXRecord):
                 return "ERROR: This domain has no MX record"
-            as Err(EmailValidationError.LocalNameTooShort(length)):
+            with Err(EmailValidationError.LocalNameTooShort(length)):
                 return "ERROR: The local component must be at least {:d} characters".format(length)
 
 Sometimes a function returns an ``Option`` or ``Result``, but you aren't sure

@@ -11,7 +11,7 @@ class Parser(object):
 
         "LPAREN", "RPAREN",
 
-        "AS", "CASE", "CLASS", "DEF", "ENUM", "MATCH", "RETURN", "TYPE",
+        "CASE", "CLASS", "DEF", "ENUM", "MATCH", "RETURN", "TYPE", "WITH",
 
         "NAME", "INTEGER",
     ])
@@ -117,7 +117,7 @@ class Parser(object):
     def match_cases_match_cases_match_case(self, p):
         return p[0] + [p[1]]
 
-    @_pg.production("match_case : AS expression COLON NEWLINE INDENT suite "
+    @_pg.production("match_case : WITH expression COLON NEWLINE INDENT suite "
                     "             DEDENT")
     def match_case(self, p):
         return ast.MatchCase(p[1], p[5])
