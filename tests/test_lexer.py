@@ -148,7 +148,7 @@ class TestLexer(object):
         assert_lexes("""
         def f():
             match 3:
-                as n:
+                with n:
                     return n
         """, [
             Token("DEF", "def"),
@@ -163,7 +163,7 @@ class TestLexer(object):
             Token("COLON", ":"),
             Token("NEWLINE", "\n"),
             Token("INDENT", "    "),
-            Token("AS", "as"),
+            Token("WITH", "with"),
             Token("NAME", "n"),
             Token("COLON", ":"),
             Token("NEWLINE", "\n"),

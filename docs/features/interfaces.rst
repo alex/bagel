@@ -23,9 +23,9 @@ Next we can write code which uses this interface::
 
     def cached_expensive_computation(cache: CacheClient, key: Bytes) -> Bytes:
         match cache.get(key):
-            as Some(result):
+            with Some(result):
                 return result
-            as None:
+            with None:
                 result = expensive_computation()
                 cache.set(key, result)
                 return result

@@ -108,7 +108,7 @@ class TestParser(object):
         assert_parses("""
         def f():
             match 3:
-                as n:
+                with n:
                     return n
         """, ast.Module([
             ast.Function("f", [], None, ast.Suite([
@@ -124,9 +124,9 @@ class TestParser(object):
         assert_parses("""
         def f():
             match 3:
-                as 5:
+                with 5:
                     return 10
-                as n:
+                with n:
                     return n
         """, ast.Module([
             ast.Function("f", [], None, ast.Suite([
