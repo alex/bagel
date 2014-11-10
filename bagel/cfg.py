@@ -20,10 +20,10 @@
 #     case If(cond: Value, if_target: Block, else_target: Block)
 
 
-
 # class type Block:
 #     instructions: List[Instruction]
 #     exit_condition: ExitCondition
+
 
 class Namespace(object):
     def __init__(self):
