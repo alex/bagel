@@ -72,6 +72,10 @@ def assert_parses(source, expected_ast):
 
 
 class TestParser(object):
+    def test_no_conflicts(self):
+        assert not parser.Parser._parser.lr_table.sr_conflicts
+        assert not parser.Parser._parser.lr_table.rr_conflicts
+
     def test_simple_function(self):
         assert_parses("""
         def f():
