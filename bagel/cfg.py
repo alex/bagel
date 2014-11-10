@@ -2,7 +2,7 @@
 #     # ...
 
 
-# interface type Value:
+# enum type Value:
 #     case LocalVariable(name: Text)
 #     case GlobalName(name: Text)
 #     case ConstantInt(value: Int)
