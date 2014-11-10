@@ -82,6 +82,16 @@ class TestParser(object):
             ]))
         ]))
 
+    def test_function_return_type(self):
+        assert_parses("""
+        def f() -> Int:
+            return 3
+        """, ast.Module([
+            ast.Function("f", [], ast.Name("Int"), ast.Suite([
+                ast.Return(ast.Integer(3))
+            ]))
+        ]))
+
     def test_simple_class(self):
         assert_parses("""
         class type Foo:

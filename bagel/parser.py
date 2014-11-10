@@ -7,7 +7,7 @@ class Parser(object):
     _pg = ParserGenerator([
         "NEWLINE", "INDENT", "DEDENT",
 
-        "COLON", "COMMA", "EQUAL",
+        "ARROW", "COLON", "COMMA", "EQUAL",
 
         "LPAREN", "RPAREN",
 
@@ -40,12 +40,20 @@ class Parser(object):
     def declaration(self, p):
         return p[0]
 
-    @_pg.production("function : DEF NAME LPAREN RPAREN COLON NEWLINE INDENT "
-                    "           suite DEDENT")
+    @_pg.production("function : DEF NAME LPAREN RPAREN return_type COLON"
+                    "           NEWLINE INDENT suite DEDENT")
     def function(self, p):
         return ast.Function(
-            p[1].getstr(), [], None, p[7],
+            p[1].getstr(), [], p[4], p[8],
         )
+
+    @_pg.production("return_type : none")
+    def function_return_type_none(self, p):
+        return p[0]
+
+    @_pg.production("return_type : ARROW expression")
+    def function_return_type_arrow_expression(self, p):
+        return p[1]
 
     @_pg.production("class : CLASS TYPE NAME COLON NEWLINE INDENT declarations"
                     "        DEDENT")
