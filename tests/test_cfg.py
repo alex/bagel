@@ -50,7 +50,10 @@ class TestCFGLowering(object):
             return a
         """, Function("f", [], [
             Block([
-                cfg.Instruction(cfg.Opcodes.ASSIGN, [cfg.LocalName("a"), cfg.ConstantInt(3)]),
+                cfg.Instruction(
+                    cfg.Opcodes.ASSIGN,
+                    [cfg.LocalName("a"), cfg.ConstantInt(3)]
+                ),
             ], exit_condition=cfg.ReturnValue(cfg.LocalName("a")))
         ]))
 
@@ -63,10 +66,27 @@ class TestCFGLowering(object):
             return 4 + c
         """, Function("f", [], [
             Block([
-                cfg.Instruction(cfg.Opcodes.ASSIGN, [cfg.LocalName("a"), cfg.ConstantInt(3)]),
-                cfg.Instruction(cfg.Opcodes.ASSIGN, [cfg.LocalName("b"), cfg.ConstantInt(5)]),
-                cfg.Instruction(cfg.Opcodes.ADD, [cfg.LocalName("a"), cfg.LocalName("b")], result=cfg.InstructionResult("v0")),
-                cfg.Instruction(cfg.Opcodes.ASSIGN, [cfg.LocalName("c"), cfg.InstructionResult("v0")]),
-                cfg.Instruction(cfg.Opcodes.ADD, [cfg.ConstantInt(4), cfg.LocalName("c")], result=cfg.InstructionResult("v1")),
+                cfg.Instruction(
+                    cfg.Opcodes.ASSIGN,
+                    [cfg.LocalName("a"), cfg.ConstantInt(3)]
+                ),
+                cfg.Instruction(
+                    cfg.Opcodes.ASSIGN,
+                    [cfg.LocalName("b"), cfg.ConstantInt(5)]
+                ),
+                cfg.Instruction(
+                    cfg.Opcodes.ADD,
+                    [cfg.LocalName("a"), cfg.LocalName("b")],
+                    result=cfg.InstructionResult("v0")
+                ),
+                cfg.Instruction(
+                    cfg.Opcodes.ASSIGN,
+                    [cfg.LocalName("c"), cfg.InstructionResult("v0")]
+                ),
+                cfg.Instruction(
+                    cfg.Opcodes.ADD,
+                    [cfg.ConstantInt(4), cfg.LocalName("c")],
+                    result=cfg.InstructionResult("v1")
+                ),
             ], exit_condition=cfg.ReturnValue(cfg.InstructionResult("v1")))
         ]))
