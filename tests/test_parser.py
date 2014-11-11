@@ -57,6 +57,11 @@ class AssertEqualVisitor(object):
         assert node1._name == node2._name
         self._visit_list(node1._members, node2._members)
 
+    def visit_binop(self, node1, node2):
+        assert node1._op == node2._op
+        self.visit(node1._lhs, node2._lhs)
+        self.visit(node1._rhs, node2._rhs)
+
     def visit_name(self, node1, node2):
         assert node1._value == node2._value
 
@@ -162,5 +167,15 @@ class TestParser(object):
         """, ast.Module([
             ast.Function("f", [], None, ast.Suite([
                 ast.Assignment(ast.Name("a"), ast.Integer(2))
+            ]))
+        ]))
+
+    def test_binop(self):
+        assert_parses("""
+        def f():
+            4 + 8
+        """, ast.Module([
+            ast.Function("f", [], None, ast.Suite([
+                ast.BinOp("+", ast.Integer(4), ast.Integer(8))
             ]))
         ]))
