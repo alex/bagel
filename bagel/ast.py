@@ -96,6 +96,16 @@ class MatchCase(object):
         return visitor.visit_match_case(self, arg)
 
 
+class BinOp(object):
+    def __init__(self, op, lhs, rhs):
+        self._op = op
+        self._lhs = lhs
+        self._rhs = rhs
+
+    def visit(self, visitor, arg):
+        return visitor.visit_binop(self, arg)
+
+
 class Name(object):
     def __init__(self, value):
         self._value = value

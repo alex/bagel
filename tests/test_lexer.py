@@ -194,3 +194,22 @@ class TestLexer(object):
             Token("NEWLINE", "\n"),
             Token("DEDENT", ""),
         ])
+
+    def test_lex_binop(self):
+        assert_lexes("""
+        def f():
+            4 + 8
+        """, [
+            Token("DEF", "def"),
+            Token("NAME", "f"),
+            Token("LPAREN", "("),
+            Token("RPAREN", ")"),
+            Token("COLON", ":"),
+            Token("NEWLINE", "\n"),
+            Token("INDENT", "    "),
+            Token("INTEGER", "4"),
+            Token("PLUS", "+"),
+            Token("INTEGER", "8"),
+            Token("NEWLINE", "\n"),
+            Token("DEDENT", ""),
+        ])

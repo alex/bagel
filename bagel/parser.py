@@ -9,11 +9,15 @@ class Parser(object):
 
         "ARROW", "COLON", "COMMA", "EQUAL",
 
+        "PLUS",
+
         "LPAREN", "RPAREN",
 
         "CASE", "CLASS", "DEF", "ENUM", "MATCH", "RETURN", "TYPE", "WITH",
 
         "NAME", "INTEGER",
+    ], precedence=[
+        ("left", ["PLUS"]),
     ])
 
     @_pg.production("program : module")
@@ -101,6 +105,7 @@ class Parser(object):
     @_pg.production("statement : return")
     @_pg.production("statement : assignment")
     @_pg.production("statement : match")
+    @_pg.production("statement : expression NEWLINE")
     def statement(self, p):
         return p[0]
 
@@ -130,12 +135,21 @@ class Parser(object):
     def match_case(self, p):
         return ast.MatchCase(p[1], p[5])
 
-    @_pg.production("expression : INTEGER")
-    def expression_integer(self, p):
+    @_pg.production("expression : binop")
+    @_pg.production("expression : atom")
+    def expression(self, p):
+        return p[0]
+
+    @_pg.production("binop : expression PLUS expression")
+    def binop(self, p):
+        return ast.BinOp(p[1].getstr(), p[0], p[2])
+
+    @_pg.production("atom : INTEGER")
+    def atom_integer(self, p):
         return ast.Integer(int(p[0].getstr()))
 
-    @_pg.production("expression : NAME")
-    def expression_name(self, p):
+    @_pg.production("atom : NAME")
+    def atom_name(self, p):
         return ast.Name(p[0].getstr())
 
     @_pg.production("none : ")
