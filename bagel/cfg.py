@@ -16,7 +16,7 @@
 
 # enum type ExitCondition:
 #     case ReturnValue(Option[Value])
-#     case Fallthrough(Block)
+#     case Jump(Block)
 #     case If(cond: Value, if_target: Block, else_target: Block)
 
 
