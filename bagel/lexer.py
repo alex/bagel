@@ -21,6 +21,8 @@ class Lexer(object):
     _lg.add("ARROW", r"->")
     _lg.add("EQUAL", r"=")
 
+    _lg.add("PLUS", r"\+")
+
     _lg.add("INTEGER", r"\d+")
 
     _lg.add("NEWLINE_WITH_SPACES", r"\n(    )*")
