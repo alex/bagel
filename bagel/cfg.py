@@ -80,44 +80,25 @@ class Instruction(object):
         self._arguments = arguments
         self._result = result
 
-    def __eq__(self, other):
-        return (
-            self._opcode == other._opcode and
-            self._arguments == other._arguments and
-            self._result == other._result
-        )
-
 
 class ReturnValue(object):
     def __init__(self, value):
         self._value = value
-
-    def __eq__(self, other):
-        return self._value == other._value
 
 
 class LocalName(object):
     def __init__(self, name):
         self._name = name
 
-    def __eq__(self, other):
-        return self._name == other._name
-
 
 class ConstantInt(object):
     def __init__(self, value):
         self._value = value
 
-    def __eq__(self, other):
-        return self._value == other._value
-
 
 class InstructionResult(object):
     def __init__(self, name):
         self._name = name
-
-    def __eq__(self, other):
-        return self._name == other._name
 
 
 class ASTToControlFlowVisitor(object):
