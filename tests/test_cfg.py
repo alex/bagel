@@ -20,7 +20,7 @@ class TestCFGLowering(object):
             return 3
         """, """
         B1:
-        RETURN 3
+        :RETURN 3
         """)
 
     def test_assignment(self):
@@ -30,8 +30,8 @@ class TestCFGLowering(object):
             return a
         """, """
         B1:
-        a = 3
-        RETURN a
+        ASSIGN a -> 3
+        :RETURN a
         """)
 
     def test_lower_assignment_arithmetic(self):
@@ -43,10 +43,10 @@ class TestCFGLowering(object):
             return 4 + c
         """, """
         B1:
-        a = 3
-        b = 5
-        @v1 = ADD a b
-        c = @v1
-        @v2 = ADD 4 c
-        RETURN @v2
+        ASSIGN 3 -> a
+        ASSIGN b -> 5
+        ADD a, b -> @v1
+        ASSIGN @v1 -> c
+        ADD 4, c -> @v2
+        :RETURN @v2
         """)
