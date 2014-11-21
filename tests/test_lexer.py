@@ -195,7 +195,7 @@ class TestLexer(object):
             Token("DEDENT", ""),
         ])
 
-    def test_lex_binop(self):
+    def test_binop(self):
         assert_lexes("""
         def f():
             4 + 8
@@ -211,5 +211,38 @@ class TestLexer(object):
             Token("PLUS", "+"),
             Token("INTEGER", "8"),
             Token("NEWLINE", "\n"),
+            Token("DEDENT", ""),
+        ])
+
+    def test_if_statement(self):
+        assert_lexes("""
+        def f():
+            if 3:
+                4
+            else:
+                5
+        """, [
+            Token("DEF", "def"),
+            Token("NAME", "f"),
+            Token("LPAREN", "("),
+            Token("RPAREN", ")"),
+            Token("COLON", ":"),
+            Token("NEWLINE", "\n"),
+            Token("INDENT", "    "),
+            Token("IF", "if"),
+            Token("INTEGER", "3"),
+            Token("COLON", ":"),
+            Token("NEWLINE", "\n"),
+            Token("INDENT", "    "),
+            Token("INTEGER", "4"),
+            Token("NEWLINE", "\n"),
+            Token("DEDENT", ""),
+            Token("ELSE", "else"),
+            Token("COLON", ":"),
+            Token("NEWLINE", "\n"),
+            Token("INDENT", "    "),
+            Token("INTEGER", "5"),
+            Token("NEWLINE", "\n"),
+            Token("DEDENT", ""),
             Token("DEDENT", ""),
         ])

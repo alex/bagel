@@ -41,6 +41,11 @@ class AssertEqualVisitor(object):
         self.visit(node1._matcher, node2._matcher)
         self.visit(node1._body, node2._body)
 
+    def visit_if(self, node1, node2):
+        self.visit(node1._condition, node2._condition)
+        self.visit(node1._if_body, node2._if_body)
+        self.visit(node1._else_body, node2._else_body)
+
     def visit_class(self, node1, node2):
         assert node1._name == node2._name
         self._visit_list(node1._declarations, node2._declarations)
@@ -177,5 +182,41 @@ class TestParser(object):
         """, ast.Module([
             ast.Function("f", [], None, ast.Suite([
                 ast.BinOp("+", ast.Integer(4), ast.Integer(8))
+            ]))
+        ]))
+
+    def test_if_statement(self):
+        assert_parses("""
+        def f():
+            if 3:
+                a = 4
+        """, ast.Module([
+            ast.Function("f", [], None, ast.Suite([
+                ast.If(
+                    ast.Integer(3),
+                    ast.Suite([ast.Assignment(ast.Name("a"), ast.Integer(4))]),
+                    None,
+                ),
+            ]))
+        ]))
+
+    def test_if_else(self):
+        assert_parses("""
+        def f():
+            if 3:
+                a = 4
+            else:
+                a = 5
+        """, ast.Module([
+            ast.Function("f", [], None, ast.Suite([
+                ast.If(
+                    ast.Integer(3),
+                    ast.Suite([
+                        ast.Assignment(ast.Name("a"), ast.Integer(4)),
+                    ]),
+                    ast.Suite([
+                        ast.Assignment(ast.Name("a"), ast.Integer(5))
+                    ])
+                )
             ]))
         ]))
