@@ -219,6 +219,8 @@ class TestLexer(object):
         def f():
             if 3:
                 4
+            else:
+                5
         """, [
             Token("DEF", "def"),
             Token("NAME", "f"),
@@ -233,6 +235,13 @@ class TestLexer(object):
             Token("NEWLINE", "\n"),
             Token("INDENT", "    "),
             Token("INTEGER", "4"),
+            Token("NEWLINE", "\n"),
+            Token("DEDENT", ""),
+            Token("ELSE", "else"),
+            Token("COLON", ":"),
+            Token("NEWLINE", "\n"),
+            Token("INDENT", "    "),
+            Token("INTEGER", "5"),
             Token("NEWLINE", "\n"),
             Token("DEDENT", ""),
             Token("DEDENT", ""),

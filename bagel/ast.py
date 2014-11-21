@@ -97,9 +97,10 @@ class MatchCase(object):
 
 
 class If(object):
-    def __init__(self, condition, if_body):
+    def __init__(self, condition, if_body, else_body):
         self._condition = condition
         self._if_body = if_body
+        self._else_body = else_body
 
     def visit(self, visitor, arg):
         return visitor.visit_if(self, arg)
