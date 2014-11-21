@@ -14,9 +14,13 @@ def serialize_value(value):
 
 def serialize_instruction(instruction):
     instruction_string = instruction._opcode.name
-    instruction_string += " " + ", ".join(serialize_value(v) for v in instruction._arguments)
+    instruction_string += " " + ", ".join(
+        serialize_value(v) for v in instruction._arguments
+    )
     if instruction._result:
-        instruction_string += " -> {}".format(serialize_value(instruction._result))
+        instruction_string += " -> {}".format(
+            serialize_value(instruction._result)
+        )
     return instruction_string
 
 
@@ -31,7 +35,11 @@ def serialize_block(result, block):
     if isinstance(exit, cfg.ReturnValue):
         result.append(":RETURN {}".format(serialize_value(exit._value)))
     elif isinstance(exit, cfg.ConditionalBranch):
-        result.append(":CONDITIONAL_BRANCH {}, {}, {}".format(serialize_value(exit._condition), exit._if_target._name, exit._else_target._name))
+        result.append(":CONDITIONAL_BRANCH {}, {}, {}".format(
+            serialize_value(exit._condition),
+            exit._if_target._name,
+            exit._else_target._name
+        ))
         serialize_block(result, exit._if_target)
         serialize_block(result, exit._else_target)
 
@@ -48,7 +56,13 @@ def assert_lowers(source, expected_function):
     namespace = cfg.Namespace()
     cfg.ASTToControlFlowVisitor().visit(ast, namespace)
 
-    assert serialize_function(namespace.find_function("f")) == filter(bool, map(str.strip, expected_function.splitlines()))
+    serialized_function = serialize_function(namespace.find_function("f"))
+    expected_serialization = [
+        line.strip()
+        for line in expected_function.splitlines()
+        if line.strip()
+    ]
+    assert serialized_function == expected_serialization
 
 
 class TestCFGLowering(object):

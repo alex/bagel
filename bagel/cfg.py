@@ -156,7 +156,8 @@ class ASTToControlFlowVisitor(object):
 
     def visit_function(self, node, namespace):
         function = namespace.new_function(node._name, node._arguments)
-        self.visit(node._body, InstructionBuilder(function, function._entry_block))
+        builder = InstructionBuilder(function, function._entry_block)
+        self.visit(node._body, builder)
 
     def visit_suite(self, node, builder):
         self._visit_list(node._body, builder)
