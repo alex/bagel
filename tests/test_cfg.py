@@ -12,6 +12,8 @@ def serialize_value(value):
         return str(value._name)
     elif isinstance(value, cfg.InstructionResult):
         return "@" + value._name
+    else:
+        raise NotImplementedError(value)
 
 
 def serialize_instruction(instruction):
@@ -72,8 +74,13 @@ def assert_lowers(source, expected_function):
 
 
 class TestSerialization(object):
-    with pytest.raises(NotImplementedError):
-        serialize_exit([], object())
+    def test_serialize_exit_invalid(self):
+        with pytest.raises(NotImplementedError):
+            serialize_exit([], object())
+
+    def test_serialize_value_invalid(self):
+        with pytest.raises(NotImplementedError):
+            serialize_value(object())
 
 
 class TestCFGLowering(object):
