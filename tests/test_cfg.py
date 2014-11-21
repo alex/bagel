@@ -10,8 +10,6 @@ def serialize_value(value):
         return str(value._name)
     elif isinstance(value, cfg.InstructionResult):
         return "@" + value._name
-    else:
-        raise NotImplementedError(value)
 
 
 def serialize_instruction(instruction):
@@ -36,8 +34,6 @@ def serialize_block(result, block):
         result.append(":CONDITIONAL_BRANCH {}, {}, {}".format(serialize_value(exit._condition), exit._if_target._name, exit._else_target._name))
         serialize_block(result, exit._if_target)
         serialize_block(result, exit._else_target)
-    else:
-        raise NotImplementedError(exit)
 
 
 def serialize_function(function):
