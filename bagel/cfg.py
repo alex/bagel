@@ -1,32 +1,5 @@
 import enum
 
-# enum type Opcode:
-#     # ...
-
-
-# enum type Value:
-#     case LocalVariable(name: Text)
-#     case GlobalName(name: Text)
-#     case ConstantInt(value: Int)
-#     case Temporary(number: Int)
-
-
-# class type Instruction:
-#     op: Opcode
-#     arguments: List[Value]
-#     result: Option[Value]
-
-
-# enum type ExitCondition:
-#     case ReturnValue(Option[Value])
-#     case Jump(Block)
-#     case If(cond: Value, if_target: Block, else_target: Block)
-
-
-# class type Block:
-#     instructions: List[Instruction]
-#     exit_condition: ExitCondition
-
 
 class Opcodes(enum.Enum):
     ASSIGN = 0
