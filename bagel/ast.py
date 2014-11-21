@@ -96,6 +96,15 @@ class MatchCase(object):
         return visitor.visit_match_case(self, arg)
 
 
+class If(object):
+    def __init__(self, condition, if_body):
+        self._condition = condition
+        self._if_body = if_body
+
+    def visit(self, visitor, arg):
+        return visitor.visit_if(self, arg)
+
+
 class BinOp(object):
     def __init__(self, op, lhs, rhs):
         self._op = op
