@@ -169,19 +169,17 @@ class ASTToControlFlowVisitor(object):
         v = self.visit(node._condition, builder)
         if_block = builder.new_block()
         else_block = builder.new_block()
-        fall_through = builder.new_block()
 
         builder.exit(ConditionalBranch(v, if_block, else_block))
 
         builder.use_block(if_block)
         self.visit(node._if_body, builder)
-        if not builder.has_exit():
-            builder.exit(Jump(fall_through))
+        # TODO: handle fallthroug block
+        assert builder.has_exit()
 
         builder.use_block(else_block)
         self.visit(node._else_body, builder)
-        if not builder.has_exit():
-            builder.exit(Jump(fall_through))
+        assert builder.has_exit()
 
     def visit_assignment(self, node, builder):
         # TODO: handle the fact that this is an assignment context
