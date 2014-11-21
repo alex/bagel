@@ -44,6 +44,7 @@ class AssertEqualVisitor(object):
     def visit_if(self, node1, node2):
         self.visit(node1._condition, node2._condition)
         self.visit(node1._if_body, node2._if_body)
+        self.visit(node1._else_body, node2._else_body)
 
     def visit_class(self, node1, node2):
         assert node1._name == node2._name
@@ -194,6 +195,28 @@ class TestParser(object):
                 ast.If(
                     ast.Integer(3),
                     ast.Suite([ast.Assignment(ast.Name("a"), ast.Integer(4))]),
+                    None,
                 ),
+            ]))
+        ]))
+
+    def test_if_else(self):
+        assert_parses("""
+        def f():
+            if 3:
+                a = 4
+            else:
+                a = 5
+        """, ast.Module([
+            ast.Function("f", [], None, ast.Suite([
+                ast.If(
+                    ast.Integer(3),
+                    ast.Suite([
+                        ast.Assignment(ast.Name("a"), ast.Integer(4)),
+                    ]),
+                    ast.Suite([
+                        ast.Assignment(ast.Name("a"), ast.Integer(5))
+                    ])
+                )
             ]))
         ]))

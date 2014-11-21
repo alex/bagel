@@ -13,8 +13,8 @@ class Parser(object):
 
         "LPAREN", "RPAREN",
 
-        "CASE", "CLASS", "DEF", "ENUM", "IF", "MATCH", "RETURN", "TYPE",
-        "WITH",
+        "CASE", "CLASS", "DEF", "ELSE", "ENUM", "IF", "MATCH", "RETURN",
+        "TYPE", "WITH",
 
         "NAME", "INTEGER",
     ], precedence=[
@@ -137,9 +137,18 @@ class Parser(object):
     def match_case(self, p):
         return ast.MatchCase(p[1], p[5])
 
-    @_pg.production("if : IF expression COLON NEWLINE INDENT suite DEDENT")
+    @_pg.production("if : IF expression COLON NEWLINE INDENT suite DEDENT "
+                    "     else_clause")
     def if_statement(self, p):
-        return ast.If(p[1], p[5])
+        return ast.If(p[1], p[5], p[7])
+
+    @_pg.production("else_clause : none")
+    def else_clause_none(self, p):
+        return p[0]
+
+    @_pg.production("else_clause : ELSE COLON NEWLINE INDENT suite DEDENT")
+    def else_clause(self, p):
+        return p[4]
 
     @_pg.production("expression : binop")
     @_pg.production("expression : atom")
