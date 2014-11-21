@@ -1,5 +1,7 @@
 import textwrap
 
+import pytest
+
 from bagel import cfg, parser
 
 
@@ -17,21 +19,13 @@ def serialize_instruction(instruction):
     instruction_string += " " + ", ".join(
         serialize_value(v) for v in instruction._arguments
     )
-    if instruction._result:
-        instruction_string += " -> {}".format(
-            serialize_value(instruction._result)
-        )
+    instruction_string += " -> {}".format(
+        serialize_value(instruction._result)
+    )
     return instruction_string
 
 
-def serialize_block(result, block):
-    if block._name != "B0":
-        result.append("---")
-    result.append("{}:".format(block._name))
-    for instruction in block._instructions:
-        result.append(serialize_instruction(instruction))
-
-    exit = block._exit_condition
+def serialize_exit(result, exit):
     if isinstance(exit, cfg.ReturnValue):
         result.append(":RETURN {}".format(serialize_value(exit._value)))
     elif isinstance(exit, cfg.ConditionalBranch):
@@ -42,6 +36,18 @@ def serialize_block(result, block):
         ))
         serialize_block(result, exit._if_target)
         serialize_block(result, exit._else_target)
+    else:
+        raise NotImplementedError(exit)
+
+
+def serialize_block(result, block):
+    if block._name != "B0":
+        result.append("---")
+    result.append("{}:".format(block._name))
+    for instruction in block._instructions:
+        result.append(serialize_instruction(instruction))
+
+    serialize_exit(result, block._exit_condition)
 
 
 def serialize_function(function):
@@ -63,6 +69,11 @@ def assert_lowers(source, expected_function):
         if line.strip()
     ]
     assert serialized_function == expected_serialization
+
+
+class TestSerialization(object):
+    with pytest.raises(NotImplementedError):
+        serialize_exit([], object())
 
 
 class TestCFGLowering(object):
