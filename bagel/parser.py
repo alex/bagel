@@ -13,7 +13,8 @@ class Parser(object):
 
         "LPAREN", "RPAREN",
 
-        "CASE", "CLASS", "DEF", "ENUM", "MATCH", "RETURN", "TYPE", "WITH",
+        "CASE", "CLASS", "DEF", "ENUM", "IF", "MATCH", "RETURN", "TYPE",
+        "WITH",
 
         "NAME", "INTEGER",
     ], precedence=[
@@ -105,6 +106,7 @@ class Parser(object):
     @_pg.production("statement : return")
     @_pg.production("statement : assignment")
     @_pg.production("statement : match")
+    @_pg.production("statement : if")
     @_pg.production("statement : expression NEWLINE")
     def statement(self, p):
         return p[0]
@@ -134,6 +136,10 @@ class Parser(object):
                     "             DEDENT")
     def match_case(self, p):
         return ast.MatchCase(p[1], p[5])
+
+    @_pg.production("if : IF expression COLON NEWLINE INDENT suite DEDENT")
+    def if_statement(self, p):
+        return ast.If(p[1], p[5])
 
     @_pg.production("expression : binop")
     @_pg.production("expression : atom")

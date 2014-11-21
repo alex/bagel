@@ -12,6 +12,7 @@ class Lexer(object):
     _lg.add("WITH", r"with"),
     _lg.add("CASE", r"case")
     _lg.add("RETURN", r"return")
+    _lg.add("IF", r"if")
 
     _lg.add("LPAREN", r"\(")
     _lg.add("RPAREN", r"\)")
