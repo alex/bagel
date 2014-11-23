@@ -220,3 +220,10 @@ class TestParser(object):
                 )
             ]))
         ]))
+
+    def test_global_assignment(self):
+        assert_parses("""
+        CONSTANT = 1
+        """, ast.Module([
+            ast.Assignment(ast.Name("CONSTANT"), ast.Integer(1))
+        ]))
