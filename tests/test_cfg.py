@@ -62,7 +62,7 @@ def assert_lowers(source, expected_function):
     source = textwrap.dedent(source).lstrip()
     ast = parser.Parser().parse(source)
     namespace = cfg.Namespace()
-    cfg.ASTToControlFlowVisitor().visit(ast, namespace)
+    namespace.visit(ast, None)
 
     serialized_function = serialize_function(namespace.find_function("f"))
     expected_serialization = [

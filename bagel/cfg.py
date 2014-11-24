@@ -18,6 +18,23 @@ class Namespace(object):
     def find_function(self, name):
         return self._functions[name]
 
+    def visit(self, node, arg):
+        return node.visit(self, arg)
+
+    def _visit_list(self, items, arg):
+        for item in items:
+            self.visit(item, arg)
+
+    def visit_module(self, node, arg):
+        self._visit_list(node._declarations, arg)
+
+    def visit_function(self, node, arg):
+        function = self.new_function(node._name, node._arguments)
+        builder = InstructionBuilder(function, function._entry_block)
+        builder.visit(node._body, None)
+
+
+
 
 class Function(object):
     def __init__(self):
@@ -58,6 +75,61 @@ class InstructionBuilder(object):
 
     def use_block(self, block):
         self._block = block
+
+    def visit(self, node, arg):
+        return node.visit(self, arg)
+
+    def _visit_list(self, items, arg):
+        for item in items:
+            self.visit(item, arg)
+
+    def visit_suite(self, node, arg):
+        self._visit_list(node._body, arg)
+
+    def visit_return(self, node, arg):
+        v = self.visit(node._value, arg)
+        self.exit(ReturnValue(v))
+
+    def visit_assignment(self, node, arg):
+        # TODO: handle the fact that this is an assignment context
+        v1 = self.visit(node._target, arg)
+        v2 = self.visit(node._value, arg)
+        self.emit(Instruction(Opcodes.ASSIGN, [v2], v1))
+
+    def visit_if(self, node, arg):
+        v = self.visit(node._condition, arg)
+        if_block = self.new_block()
+        else_block = self.new_block()
+
+        self.exit(ConditionalBranch(v, if_block, else_block))
+
+        self.use_block(if_block)
+        self.visit(node._if_body, arg)
+        # TODO: handle fallthroug block
+        assert self.has_exit()
+
+        self.use_block(else_block)
+        self.visit(node._else_body, arg)
+        assert self.has_exit()
+
+    def visit_binop(self, node, arg):
+        v1 = self.visit(node._lhs, arg)
+        v2 = self.visit(node._rhs, arg)
+        result = self.new_temporary()
+        op = {
+            "+": Opcodes.ADD,
+        }[node._op]
+        self.emit(Instruction(op, [v1, v2], result=result))
+        return result
+
+    def visit_name(self, node, arg):
+        # TODO: figure out if the name is a local, update the symbol table,
+        # etc.
+        return LocalName(node._value)
+
+    def visit_integer(self, node, arg):
+        return ConstantInt(node._value)
+
 
 
 class Block(object):
@@ -114,67 +186,3 @@ class ConstantInt(object):
 class InstructionResult(object):
     def __init__(self, name):
         self._name = name
-
-
-class ASTToControlFlowVisitor(object):
-    def visit(self, node, arg):
-        return node.visit(self, arg)
-
-    def _visit_list(self, items, arg):
-        for item in items:
-            self.visit(item, arg)
-
-    def visit_module(self, node, namespace):
-        self._visit_list(node._declarations, namespace)
-
-    def visit_function(self, node, namespace):
-        function = namespace.new_function(node._name, node._arguments)
-        builder = InstructionBuilder(function, function._entry_block)
-        self.visit(node._body, builder)
-
-    def visit_suite(self, node, builder):
-        self._visit_list(node._body, builder)
-
-    def visit_return(self, node, builder):
-        v = self.visit(node._value, builder)
-        builder.exit(ReturnValue(v))
-
-    def visit_if(self, node, builder):
-        v = self.visit(node._condition, builder)
-        if_block = builder.new_block()
-        else_block = builder.new_block()
-
-        builder.exit(ConditionalBranch(v, if_block, else_block))
-
-        builder.use_block(if_block)
-        self.visit(node._if_body, builder)
-        # TODO: handle fallthroug block
-        assert builder.has_exit()
-
-        builder.use_block(else_block)
-        self.visit(node._else_body, builder)
-        assert builder.has_exit()
-
-    def visit_assignment(self, node, builder):
-        # TODO: handle the fact that this is an assignment context
-        v1 = self.visit(node._target, builder)
-        v2 = self.visit(node._value, builder)
-        builder.emit(Instruction(Opcodes.ASSIGN, [v2], v1))
-
-    def visit_binop(self, node, builder):
-        v1 = self.visit(node._lhs, builder)
-        v2 = self.visit(node._rhs, builder)
-        result = builder.new_temporary()
-        op = {
-            "+": Opcodes.ADD,
-        }[node._op]
-        builder.emit(Instruction(op, [v1, v2], result=result))
-        return result
-
-    def visit_name(self, node, builder):
-        # TODO: figure out if the name is a local, update the symbol table,
-        # etc.
-        return LocalName(node._value)
-
-    def visit_integer(self, node, builder):
-        return ConstantInt(node._value)
