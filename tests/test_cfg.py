@@ -9,9 +9,9 @@ def serialize_value(value):
     if isinstance(value, cfg.ConstantInt):
         return str(value._value)
     elif isinstance(value, cfg.LocalName):
-        return str(value._name)
-    elif isinstance(value, cfg.InstructionResult):
         return "@" + value._name
+    elif isinstance(value, cfg.InstructionResult):
+        return value._name
     else:
         raise NotImplementedError(value)
 
@@ -100,8 +100,8 @@ class TestCFGLowering(object):
             return a
         """, """
         B0:
-        ASSIGN 3 -> a
-        :RETURN a
+        ASSIGN 3 -> @a
+        :RETURN @a
         """)
 
     def test_lower_assignment_arithmetic(self):
@@ -113,12 +113,12 @@ class TestCFGLowering(object):
             return 4 + c
         """, """
         B0:
-        ASSIGN 3 -> a
-        ASSIGN 5 -> b
-        ADD a, b -> @v0
-        ASSIGN @v0 -> c
-        ADD 4, c -> @v1
-        :RETURN @v1
+        ASSIGN 3 -> @a
+        ASSIGN 5 -> @b
+        ADD @a, @b -> v0
+        ASSIGN v0 -> @c
+        ADD 4, @c -> v1
+        :RETURN v1
         """)
 
     def test_if_statement(self):
@@ -131,8 +131,8 @@ class TestCFGLowering(object):
                 return 6
         """, """
         B0:
-        ASSIGN 4 -> a
-        :CONDITIONAL_BRANCH a, B1, B2
+        ASSIGN 4 -> @a
+        :CONDITIONAL_BRANCH @a, B1, B2
         ---
         B1:
         :RETURN 5
