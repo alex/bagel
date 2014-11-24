@@ -42,6 +42,7 @@ class Parser(object):
     @_pg.production("declaration : enum")
     @_pg.production("declaration : attribute")
     @_pg.production("declaration : enum_case")
+    @_pg.production("declaration : assignment")
     def declaration(self, p):
         return p[0]
 
