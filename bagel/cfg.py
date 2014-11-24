@@ -34,8 +34,6 @@ class Namespace(object):
         builder.visit(node._body, None)
 
 
-
-
 class Function(object):
     def __init__(self):
         self._block_counter = 0
@@ -129,7 +127,6 @@ class InstructionBuilder(object):
 
     def visit_integer(self, node, arg):
         return ConstantInt(node._value)
-
 
 
 class Block(object):
