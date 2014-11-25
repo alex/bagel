@@ -8,6 +8,12 @@ class Opcodes(enum.Enum):
 
 
 class Namespace(object):
+    """
+    A Namespace contains all top-level declarations in a bagel module. In
+    addition to storing data, it is also a visitor class over the AST which
+    populates itself.
+    """
+
     def __init__(self):
         self._functions = {}
 
@@ -51,6 +57,12 @@ class Function(object):
 
 
 class Block(object):
+    """
+    Block is a basic-block in the CFG, it contains a linear sequence of
+    instructions and an exit condition. It is implemented as a visitor over the
+    AST which builds itself.
+    """
+
     def __init__(self, function):
         self._name = function.new_block_name()
         self._function = function
