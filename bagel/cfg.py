@@ -127,7 +127,6 @@ class Block(object):
         return ConstantInt(node._value)
 
 
-
 class Instruction(object):
     def __init__(self, opcode, arguments, result=None):
         self._opcode = opcode
